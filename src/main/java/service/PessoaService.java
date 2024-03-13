@@ -24,7 +24,7 @@ public class PessoaService  {
 					throw new PessoaException("CPF JÁ CADASTRO NO BANCO DE DADOS!");
 					
 				} else {
-					pessoaRepository.salvar(entity);
+					entity = pessoaRepository.salvar(entity);
 					
 				}
 				

@@ -14,7 +14,6 @@ public class PessoaRepository implements BaseRepository<PessoaEntity> {
 
 	
 	public boolean verificarCPF (PessoaEntity pessoaEntity ) {
-	
 		Connection conn = Banco.getConnection();
 		Statement stmt = Banco.getStatement(conn);
 		ResultSet resultado = null;
