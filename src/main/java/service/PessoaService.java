@@ -34,4 +34,11 @@ public class PessoaService  {
 
 	}
 	
+	public boolean excluir (int id) {
+		return this.pessoaRepository.excluir(id);
+	}
+	
+	public ArrayList <PessoaEntity> listarTodos(){
+		return this.pessoaRepository.consultarTodos();
+	}
 }

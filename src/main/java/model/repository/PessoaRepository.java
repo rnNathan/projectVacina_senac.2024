@@ -82,8 +82,26 @@ public class PessoaRepository implements BaseRepository<PessoaEntity> {
 
 	@Override
 	public boolean excluir(int id) {
+		Connection conn = Banco.getConnection();
+		Statement stmt = Banco.getStatement(conn);
+		String query = "DELETE FROM pessoa WHERE id = " + id;
+		boolean retorno = false;
 		
-		return false;
+		try {			
+			if (stmt.executeUpdate(query) == 1) {
+				retorno = true;		
+			}
+							
+		} catch (SQLException e) {
+			System.out.println("ERRO AO EXCLUIR UMA ENTIDADE.");
+			System.out.println("ERRO: " + e.getMessage());
+		}finally {
+			Banco.closeStatement(stmt);
+			Banco.closeConnection(conn);
+			
+		}
+			
+		return retorno;
 	}
 
 	@Override
@@ -101,7 +119,36 @@ public class PessoaRepository implements BaseRepository<PessoaEntity> {
 	@Override
 	public ArrayList<PessoaEntity> consultarTodos() {
 		
-		return null;
+			ArrayList  <PessoaEntity> listaPessoa = new ArrayList<PessoaEntity>();
+			Connection conn = Banco.getConnection();
+			Statement stmt = Banco.getStatement(conn);
+			ResultSet resultado = null;
+			String query = "SELECT * FROM pessoa";
+			try {
+				resultado = stmt.executeQuery(query);
+				while (resultado.next()) {
+					PessoaEntity pessoaEntity = new PessoaEntity();
+					pessoaEntity.setId(Integer.parseInt(resultado.getString("id")));
+					pessoaEntity.setNome(resultado.getString("nome"));
+					pessoaEntity.setDataNascimento(resultado.getDate("dataNascimento").toLocalDate());
+					pessoaEntity.setSexo(resultado.getString("sexo"));
+					pessoaEntity.setTipoPessoaCadastrada(resultado.getString("tipoPessoaCadastrada"));
+					listaPessoa.add(pessoaEntity);
+				}
+				
+				
+			} catch (SQLException e) {
+				
+				System.out.println("Erro ao consultar todas entidade no banco.");
+				System.out.println("ERRO: " + e.getMessage());
+			}finally {
+				
+				Banco.closeResultSet(resultado);
+				Banco.closeStatement(stmt);
+				Banco.closeConnection(conn);
+			}
+		
+		return listaPessoa;
 	}
 	
 
