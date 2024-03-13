@@ -28,7 +28,7 @@ public class PessoaRepository implements BaseRepository<PessoaEntity> {
 			}
 
 		} catch (SQLException e) {
-			System.out.println("Erro verificarCadastroUsuarioDAO");
+			System.out.println("Erro VERIFICAR CADASTRO");
 			System.out.println("Erro: " + e.getMessage());
 		} finally {
 			Banco.closeResultSet(resultado);

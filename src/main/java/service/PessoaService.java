@@ -20,12 +20,17 @@ public class PessoaService  {
 		               entity.getCpf() != null && !entity.getCpf().isEmpty() &&
 		               entity.getTipoPessoaCadastrada() != null && !entity.getTipoPessoaCadastrada().isEmpty() ) {
 				
-			} 
-			
-			if (pessoaRepository.verificarCPF(entity)) {
-				throw new PessoaException("ERRO CPF JÁ EXISTENTE");
+				if (pessoaRepository.verificarCPF(entity)) {
+					throw new PessoaException("CPF JÁ CADASTRO NO BANCO DE DADOS!");
+					
+				} else {
+					pessoaRepository.salvar(entity);
+					
+				}
+				
 			} else {
-				entity = pessoaRepository.salvar(entity);
+				
+				throw new PessoaException("UM DOS CAMPOS NÃO ESTÁ PREENCHIDO");
 			}
 		
 			return entity;
