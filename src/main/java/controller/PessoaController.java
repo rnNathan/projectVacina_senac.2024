@@ -33,7 +33,7 @@ public class PessoaController {
 	@DELETE
 	@Path("/{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public boolean excluir (@PathParam("id")int id) {
+	public boolean excluir (@PathParam("id")int id) throws PessoaException {
 		return this.pessoaService.excluir(id);
 	}
 	
@@ -41,7 +41,7 @@ public class PessoaController {
 	@Path("listar")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public ArrayList<PessoaEntity> listarTodos(){
+	public ArrayList<PessoaEntity> listarTodos()  throws PessoaException {
 		return this.pessoaService.listarTodos();
 		
 	}

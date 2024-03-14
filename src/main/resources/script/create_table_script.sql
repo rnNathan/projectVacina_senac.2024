@@ -1,0 +1,25 @@
+create schema if not EXISTS vacina;
+
+use vacina;
+
+CREATE TABLE IF NOT EXISTS vacina.pessoa (
+    ID INTEGER AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(255) NOT NULL,
+    dataNascimento DATE NOT NULL,
+    sexo VARCHAR(10) NOT NULL,
+    cpf VARCHAR(14) NOT NULL,
+    tipoPessoa VARCHAR(15) NOT NULL
+);
+
+
+CREATE TABLE IF NOT EXISTS vacina.vacinas (
+   idVacina INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(255) NOT NULL,
+    paisOrigem VARCHAR(30) NOT NULL,
+    idPessoa INT NOT NULL,
+    estagio int NOT NULL,
+    dataInicioPesquisa DATE NOT NULL,
+    FOREIGN KEY (idPessoa) REFERENCES vacina.pessoa(id)
+);
+
+
