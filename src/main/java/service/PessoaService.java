@@ -14,11 +14,11 @@ public class PessoaService  {
 	public PessoaEntity salvar (PessoaEntity entity) throws PessoaException {
 		
 		
-			if (entity.getNome() != null && !entity.getNome().isEmpty() &&
+			if (entity.getNome() != null && !entity.getNome().trim().isEmpty() &&
 		               entity.getDataNascimento() != null &&
-		               entity.getSexo() != null && !entity.getSexo().isEmpty() &&
-		               entity.getCpf() != null && !entity.getCpf().isEmpty() &&
-		               entity.getTipoPessoaCadastrada() != null && !entity.getTipoPessoaCadastrada().isEmpty() ) {
+		               entity.getSexo() != null && !entity.getSexo().trim().isEmpty() &&
+		               entity.getCpf() != null && !entity.getCpf().trim().isEmpty() || entity.getCpf().length() == 11 &&
+		               entity.getTipoPessoaCadastrada() != null && !entity.getTipoPessoaCadastrada().trim().isEmpty() ) {
 				
 				if (pessoaRepository.verificarCPF(entity)) {
 					throw new PessoaException("CPF JÁ CADASTRO NO BANCO DE DADOS!");

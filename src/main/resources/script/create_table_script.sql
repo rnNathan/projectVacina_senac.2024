@@ -22,4 +22,15 @@ CREATE TABLE IF NOT EXISTS vacina.vacinas (
     FOREIGN KEY (idPessoa) REFERENCES vacina.pessoa(id)
 );
 
+create table if not exists vacina.aplicacao_vacina (
+    id INT not null auto_increment primary key,
+    id_pessoa int not null,
+    id_vacina int not null,
+    data_aplicacao date not null,
+    avaliacao int not null comment 'valor entre 1 e 5',
+    constraint id_pessoa foreign key (id_pessoa) references vacina.pessoa (id_pessoa),
+    constraint id_vacina foreign key (id_vacina) references vacina.vacinas (id_vacina)
+);
+
+
 

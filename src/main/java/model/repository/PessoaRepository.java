@@ -9,11 +9,14 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import model.entity.PessoaEntity;
+import model.entity.VacinacaoEntity;
+
+
 
 public class PessoaRepository implements BaseRepository<PessoaEntity> {
 
 	
-	public boolean verificarCPF (PessoaEntity pessoaEntity ) {
+	public boolean verificarCPF (PessoaEntity pessoaEntity) {
 		Connection conn = Banco.getConnection();
 		Statement stmt = Banco.getStatement(conn);
 		ResultSet resultado = null;
@@ -44,7 +47,6 @@ public class PessoaRepository implements BaseRepository<PessoaEntity> {
 				+ " VALUES (?, ?, ?, ?, ?)";
 		Connection conn = Banco.getConnection();
 		PreparedStatement pstmt = Banco.getPreparedStatementWithPk(conn, query);
-		
 		try {
 			//Estou pegando um metodo setString para obter o tipo que irei cadastrar
 			//depois mostro a posição da coluna e insero o valor que será armazenado no repositorio.
@@ -114,11 +116,14 @@ public class PessoaRepository implements BaseRepository<PessoaEntity> {
 		
 		return null;
 	}
+	
+	
 
 	@Override
 	public ArrayList<PessoaEntity> consultarTodos() {
 		
 			ArrayList  <PessoaEntity> listaPessoa = new ArrayList<PessoaEntity>();
+			ArrayList<VacinacaoEntity> listaVacina = new ArrayList<VacinacaoEntity>();
 			Connection conn = Banco.getConnection();
 			Statement stmt = Banco.getStatement(conn);
 			ResultSet resultado = null;
