@@ -2,6 +2,8 @@ package model.repository;
 
 import java.util.ArrayList;
 
+import model.entity.VacinacaoEntity;
+
 
 //BaseRepository com o tipo <T> é usado como interface e outras 
 //classe herdarem todos os metodos dessa class
@@ -23,5 +25,6 @@ public interface BaseRepository <T> {
 	
 	//listar todas entidades do banco de dados.
 	public ArrayList<T> consultarTodos();
+
 
 }

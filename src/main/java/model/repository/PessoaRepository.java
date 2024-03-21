@@ -7,7 +7,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-
 import model.entity.PessoaEntity;
 
 public class PessoaRepository implements BaseRepository<PessoaEntity> {
@@ -74,9 +73,8 @@ public class PessoaRepository implements BaseRepository<PessoaEntity> {
 		pstmt.setDate(2, Date.valueOf(novaEntidade.getDataNascimento()));
 		pstmt.setString(3, novaEntidade.getSexo());
 		pstmt.setString(4, novaEntidade.getCpf());
-		pstmt.setString(5, novaEntidade.getTipoPessoaCadastrada());
+		pstmt.setString(5, novaEntidade.getTipoPessoaCadastrada());	
 		return pstmt;
-		
 	}
 
 	@Override
@@ -146,9 +144,9 @@ public class PessoaRepository implements BaseRepository<PessoaEntity> {
 				Banco.closeStatement(stmt);
 				Banco.closeConnection(conn);
 			}
+			
 		
 		return listaPessoa;
 	}
 	
-
 }
