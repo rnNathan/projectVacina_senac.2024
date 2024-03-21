@@ -7,7 +7,7 @@ public class VacinaEntity {
 	private Integer id;
 	private String nome;
 	private String paisOrigem;
-	private PessoaEntity idPesquisador;
+	private PessoaEntity pesquisador;
 	private Integer estagio;
 	private LocalDate dataInicioPesquisa;
 	
@@ -21,7 +21,7 @@ public class VacinaEntity {
 		this.id = id;
 		this.nome = nome;
 		this.paisOrigem = paisOrigem;
-		this.idPesquisador = idPesquisador;
+		this.pesquisador = idPesquisador;
 		this.estagio = estagio;
 		this.dataInicioPesquisa = dataInicioPesquisa;
 	}
@@ -44,11 +44,11 @@ public class VacinaEntity {
 	public void setPaisOrigem(String paisOrigem) {
 		this.paisOrigem = paisOrigem;
 	}
-	public PessoaEntity getIdPesquisador() {
-		return idPesquisador;
+	public PessoaEntity getPesquisador() {
+		return pesquisador;
 	}
-	public void setIdPesquisador(PessoaEntity idPesquisador) {
-		this.idPesquisador = idPesquisador;
+	public void setPesquisador(PessoaEntity pesquisador) {
+		this.pesquisador = pesquisador;
 	}
 	public Integer getEstagio() {
 		return estagio;

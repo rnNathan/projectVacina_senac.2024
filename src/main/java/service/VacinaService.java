@@ -13,15 +13,9 @@ public class VacinaService {
 	
 	
 	
-	public VacinaEntity salvar (VacinaEntity entity) throws PessoaException {
-		if(entity.getIdPesquisador().getTipoPessoaCadastrada().toLowerCase().equals("pesquisador")) {
-			entity = repository.salvar(entity);
-			
-		}else {
-			throw new PessoaException("Para cadastrar uma vacina precisa ser um pesquisador!");
-		}
+	public VacinaEntity salvar (VacinaEntity entity){
 		
-		return entity;
+		return repository.salvar(entity);
 	}
 	
 	public boolean excluir (int id) {

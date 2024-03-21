@@ -13,13 +13,13 @@ public class PessoaEntity  {
 	private LocalDate dataNascimento;
 	private String  sexo;
 	private String cpf;
-	private String tipoPessoaCadastrada;
+	private Integer tipoPessoaCadastrada;
 	private ArrayList<VacinacaoEntity> todasVacinas;
 	
 	
 	
 	public PessoaEntity(int id, String nome, LocalDate dataNascimento, String sexo, String cpf,
-			String tipoPessoaCadastrada, ArrayList<VacinacaoEntity> todasVacinas) {
+			Integer tipoPessoaCadastrada, ArrayList<VacinacaoEntity> todasVacinas) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -64,10 +64,10 @@ public class PessoaEntity  {
 	public void setCpf(String cpf) {
 		this.cpf = cpf;
 	}
-	public String getTipoPessoaCadastrada() {
+	public Integer getTipoPessoaCadastrada() {
 		return tipoPessoaCadastrada;
 	}
-	public void setTipoPessoaCadastrada(String tipoPessoaCadastrada) {
+	public void setTipoPessoaCadastrada(Integer tipoPessoaCadastrada) {
 		this.tipoPessoaCadastrada = tipoPessoaCadastrada;
 	}
 	public ArrayList<VacinacaoEntity> getTodasVacinas() {

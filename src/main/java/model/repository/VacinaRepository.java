@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import model.entity.PessoaEntity;
 import model.entity.VacinaEntity;
 
 public class VacinaRepository implements BaseRepository<VacinaEntity> {
@@ -15,18 +16,25 @@ public class VacinaRepository implements BaseRepository<VacinaEntity> {
 	@Override
 	public VacinaEntity salvar(VacinaEntity salvarVacina) {
 
-		
-		String query = "INSERT INTO vacinas (nome, paisOrigem, idPesquisador, estagio, dataIncioPesquisa) values (?, ?, ?, ?, ?)"; 
-
+		String query = "INSERT INTO vacinas (nome, paisOrigem, id_pessoa, estagio, dataInicioPesquisa) values (?, ?, ?, ?, ?)"; 
 		Connection conn = Banco.getConnection();
 		PreparedStatement pstmt = Banco.getPreparedStatementWithPk(conn, query);
+		
+		
 
 		try {
-
-			preencherValoresInsertUpdate(pstmt, salvarVacina);
+			
+			PessoaRepository pessoaRepository = new PessoaRepository();
+			pstmt.setString(1, salvarVacina.getNome());
+			pstmt.setString(2, salvarVacina.getPaisOrigem());
+			pstmt.setObject(3, pessoaRepository.consultarPorId(salvarVacina.getId()));
+			pstmt.setInt(4, salvarVacina.getEstagio());
+			pstmt.setDate(5, Date.valueOf(salvarVacina.getDataInicioPesquisa()));
 			pstmt.execute();
+			
 			ResultSet resultado = pstmt.getGeneratedKeys();
 			if (resultado.next()) {
+				
 				salvarVacina.setId(resultado.getInt(1));
 			}
 
@@ -44,19 +52,9 @@ public class VacinaRepository implements BaseRepository<VacinaEntity> {
 		return salvarVacina;
 	}
 
-	public PreparedStatement preencherValoresInsertUpdate(PreparedStatement pstmt, VacinaEntity vacinaEntity)
-			throws SQLException {
-		pstmt.setString(1, vacinaEntity.getNome());
-		pstmt.setString(2, vacinaEntity.getPaisOrigem());
-		pstmt.setObject(3, vacinaEntity.getIdPesquisador());
-		pstmt.setInt(4, vacinaEntity.getEstagio());
-		pstmt.setDate(5, Date.valueOf(vacinaEntity.getDataInicioPesquisa()));
-		return pstmt;
-	}
-
 	@Override
 	public boolean excluir(int id) {
-		String query = "delete from vacina where id = " + id;
+		String query = "delete from vacinas where id = " + id;
 		Connection conn = Banco.getConnection();
 		Statement stmt = Banco.getStatement(conn);
 		ResultSet resultado = null;
@@ -85,13 +83,13 @@ public class VacinaRepository implements BaseRepository<VacinaEntity> {
 	@Override
 	public boolean alterar(VacinaEntity alterarVacina) {
 		boolean retorno = false;
-		String query = " UPDATE vacina "
-				+ " SET id_pesquisador=?, nome=?, pais_origem=?, estagio_pesquisa=?, data_inicio_pesquisa=? "
+		String query = " UPDATE vacinas "
+				+ " SET id_pessoa=?, nome=?, paisOrigem=?, estagio=?, dataInicioPesquisa=? "
 				+ " WHERE id=? ";
 		Connection conn = Banco.getConnection();
 		PreparedStatement pstmt = Banco.getPreparedStatementWithPk(conn, query);
 		try {
-			pstmt.setInt(1, alterarVacina.getIdPesquisador().getId());
+			pstmt.setInt(1, alterarVacina.getPesquisador().getId());
 			pstmt.setString(2, alterarVacina.getNome());
 			pstmt.setString(3, alterarVacina.getPaisOrigem());
 			pstmt.setInt(4, alterarVacina.getEstagio());
@@ -112,7 +110,7 @@ public class VacinaRepository implements BaseRepository<VacinaEntity> {
 
 	@Override
 	public VacinaEntity consultarPorId(int id) {
-		String query = "SELECT * FROM vacinas where id = " + id;
+		String query = "SELECT * FROM vacinas where id_vacina = " + id;
 		Connection conn = Banco.getConnection();
 		Statement stmt = Banco.getStatement(conn);
 		VacinaEntity vacina = null;
@@ -122,13 +120,13 @@ public class VacinaRepository implements BaseRepository<VacinaEntity> {
 			if (resultado.next()) {
 				PessoaRepository pessoaRepository = new PessoaRepository();
 				vacina = new VacinaEntity();
-				vacina.setId(resultado.getInt("id"));
+				vacina.setId(resultado.getInt("id_vacina"));
 				vacina.setNome(resultado.getString("nome"));
 				vacina.setPaisOrigem(resultado.getString("paisOrigem"));
-				vacina.setIdPesquisador(pessoaRepository.consultarPorId(resultado.getInt("idPessoa")));
+				vacina.setPesquisador(pessoaRepository.consultarPorId(resultado.getInt("id_pessoa")));
 				vacina.setEstagio(resultado.getInt("estagio"));
 				vacina.setDataInicioPesquisa(resultado.getDate("dataInicioPesquisa").toLocalDate());
-
+				
 			}
 
 		} catch (SQLException e) {
@@ -152,14 +150,17 @@ public class VacinaRepository implements BaseRepository<VacinaEntity> {
 		ResultSet resultado = null;
 
 		try {
+			
 			resultado = stmt.executeQuery(query);
+			
 			while (resultado.next()) {
 				VacinaEntity vacina = new VacinaEntity();
 				PessoaRepository repository = new PessoaRepository();
-				vacina.setId(resultado.getInt("id"));
+				
+				vacina.setId(resultado.getInt("id_vacina"));
 				vacina.setNome(resultado.getString("nome"));
 				vacina.setPaisOrigem(resultado.getString("paisOrigem"));
-				vacina.setIdPesquisador(repository.consultarPorId(resultado.getInt("idPessoa")));
+				vacina.setPesquisador(repository.consultarPorId(resultado.getInt("id_pessoa")));
 				vacina.setEstagio(resultado.getInt("estagio"));
 				vacina.setDataInicioPesquisa(resultado.getDate("dataInicioPesquisa").toLocalDate());
 				vacinas.add(vacina);
@@ -173,8 +174,9 @@ public class VacinaRepository implements BaseRepository<VacinaEntity> {
 			Banco.closeStatement(stmt);
 			Banco.closeConnection(conn);
 		}
+		
 		return vacinas;
+		
 	}
 	
-
 }

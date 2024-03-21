@@ -75,7 +75,7 @@ public class PessoaRepository implements BaseRepository<PessoaEntity> {
 		pstmt.setDate(2, Date.valueOf(novaEntidade.getDataNascimento()));
 		pstmt.setString(3, novaEntidade.getSexo());
 		pstmt.setString(4, novaEntidade.getCpf());
-		pstmt.setString(5, novaEntidade.getTipoPessoaCadastrada());	
+		pstmt.setInt(5, novaEntidade.getTipoPessoaCadastrada());	
 		return pstmt;
 	}
 
@@ -134,7 +134,7 @@ public class PessoaRepository implements BaseRepository<PessoaEntity> {
 					pessoaEntity.setNome(resultado.getString("nome"));
 					pessoaEntity.setDataNascimento(resultado.getDate("dataNascimento").toLocalDate());
 					pessoaEntity.setSexo(resultado.getString("sexo"));
-					pessoaEntity.setTipoPessoaCadastrada(resultado.getString("tipoPessoaCadastrada"));
+					pessoaEntity.setTipoPessoaCadastrada(resultado.getInt("tipoPessoaCadastrada"));
 					listaPessoa.add(pessoaEntity);
 				}
 				

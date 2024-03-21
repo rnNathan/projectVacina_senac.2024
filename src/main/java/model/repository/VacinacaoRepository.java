@@ -15,7 +15,7 @@ public class VacinacaoRepository implements BaseRepository<VacinacaoEntity> {
 
 	@Override
 	public VacinacaoEntity salvar(VacinacaoEntity novaVacinacao) {
-		String query = "INSERT INTO vacinas.aplicacao_vacina (idPessoa, vacina, dataVacina, avaliacao) values (?, ?, ?, ?)";
+		String query = "INSERT INTO vacina.aplicacao_vacina (idPessoa, vacina, dataVacina, avaliacao) values (?, ?, ?, ?)";
 		Connection conn = Banco.getConnection();
 		PreparedStatement pstmt = Banco.getPreparedStatementWithPk(conn, query);
 		try {
@@ -141,10 +141,10 @@ public class VacinacaoRepository implements BaseRepository<VacinacaoEntity> {
 			while(resultado.next()){
 				VacinacaoEntity vacinacao = new VacinacaoEntity();
 				vacinacao.setIdVacinacao(resultado.getInt("id"));
-				vacinacao.setIdpessoa(resultado.getInt("ID_PESSOA"));
+				vacinacao.setIdpessoa(resultado.getInt("id_pessoa"));
+				vacinacao.setVacina(vacinaRepository.consultarPorId(resultado.getInt("id_vacina")));
 				vacinacao.setDataVacina(resultado.getDate("data_aplicacao").toLocalDate());
 				vacinacao.setAvaliacao(resultado.getInt("avaliacao"));
-				vacinacao.setVacina(vacinaRepository.consultarPorId(resultado.getInt("id_vacina")));
 				listaVacinacao.add(vacinacao);
 			}
 		} catch (SQLException erro){
@@ -157,5 +157,7 @@ public class VacinacaoRepository implements BaseRepository<VacinacaoEntity> {
 		}
 		return listaVacinacao;
 	}
+	
+	
 
 }

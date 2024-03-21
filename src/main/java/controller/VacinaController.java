@@ -1,8 +1,6 @@
 package controller;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
-
 import exception.PessoaException;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
