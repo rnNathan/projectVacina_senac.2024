@@ -104,15 +104,63 @@ public class PessoaRepository implements BaseRepository<PessoaEntity> {
 	}
 
 	@Override
-	public boolean alterar(PessoaEntity objeto) {
+	public boolean alterar(PessoaEntity pessoaEditada) {
 		
-		return false;
+		boolean alterou = false;
+		String query = " UPDATE vacina.pessoa "
+				     + " SET nome=?, cpf=?, sexo=?, dataNascimento=?, tipoPessoaCadastrada=? "
+				     + " WHERE id=? ";
+		Connection conn = Banco.getConnection();
+		PreparedStatement stmt = Banco.getPreparedStatementWithPk(conn, query);
+		try {
+			stmt.setString(1, pessoaEditada.getNome());
+			stmt.setString(2, pessoaEditada.getCpf());
+			stmt.setString(3, pessoaEditada.getSexo() + "");
+			stmt.setDate(4, Date.valueOf(pessoaEditada.getDataNascimento()));
+			stmt.setInt(5, pessoaEditada.getTipoPessoaCadastrada());
+			stmt.setInt(6, pessoaEditada.getId());
+			alterou = stmt.executeUpdate() > 0;
+		} catch (SQLException erro) {
+			System.out.println("Erro ao atualizar pessoa");
+			System.out.println("Erro: " + erro.getMessage());
+		} finally {
+			Banco.closeStatement(stmt);
+			Banco.closeConnection(conn);
+		}
+		return alterou;
+		
 	}
 
 	@Override
 	public PessoaEntity consultarPorId(int id) {
+		String query = "SELECT * FROM pessoa where id = " + id;
+		Connection conn = Banco.getConnection();
+		Statement stmt = Banco.getStatement(conn); 
+		PessoaEntity pessoa = null;
+		ResultSet resultado = null;
 		
-		return null;
+		try {
+			 resultado = stmt.executeQuery(query);
+			if (resultado.next()) {
+				pessoa = new PessoaEntity();
+				pessoa.setId(Integer.parseInt(resultado.getString("id")));
+				pessoa.setNome(resultado.getString("nome"));
+				pessoa.setDataNascimento(resultado.getDate("dataNascimento").toLocalDate());
+				pessoa.setSexo(resultado.getString("sexo"));
+				pessoa.setTipoPessoaCadastrada(resultado.getInt("tipoPessoaCadastrada"));
+				
+			}
+			
+		} catch (SQLException e) {
+			System.out.println("Erro ao consultar por ID.");
+			System.out.println("ERRO: " + e.getMessage());
+		}finally {
+			Banco.closeResultSet(resultado);
+			Banco.closeStatement(stmt);
+			Banco.closeConnection(conn);
+		}
+		
+		return pessoa;
 	}
 	
 	

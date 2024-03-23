@@ -39,7 +39,7 @@ public class VacinaController {
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public boolean alterar (VacinaEntity altera) {
+	public Boolean alterar (VacinaEntity altera) {
 		return service.alterar(altera);
 	}
 	

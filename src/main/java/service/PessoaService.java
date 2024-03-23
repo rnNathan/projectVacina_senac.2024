@@ -39,6 +39,14 @@ public class PessoaService  {
 
 	}
 	
+	public Boolean alterar (PessoaEntity alterarPessoa) {
+		return pessoaRepository.alterar(alterarPessoa);
+	}
+	
+	public PessoaEntity consultarPorId(int id) {
+		return pessoaRepository.consultarPorId(id);
+	}
+	
 	public boolean excluir (int id) {
 		return this.pessoaRepository.excluir(id);
 	}

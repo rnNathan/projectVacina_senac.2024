@@ -14,7 +14,6 @@ public class VacinaService {
 	
 	
 	public VacinaEntity salvar (VacinaEntity entity){
-		
 		return repository.salvar(entity);
 	}
 	
