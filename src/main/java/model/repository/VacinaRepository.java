@@ -16,16 +16,15 @@ public class VacinaRepository implements BaseRepository<VacinaEntity> {
 	@Override
 	public VacinaEntity salvar(VacinaEntity novaVacina) {
 
-		String query = "INSERT INTO vacinas (nome, paisOrigem, id_pessoa, estagio, dataInicioPesquisa) values (?, ?, ?, ?, ?)"; 
+		String query = "INSERT INTO vacina.vacinas (nome, id_pais, id_pessoa, estagio, dataInicioPesquisa) values (?, ?, ?, ?, ?)"; 
 		Connection conn = Banco.getConnection();
 		PreparedStatement pstmt = Banco.getPreparedStatementWithPk(conn, query);
 		
 		try {
 			
-			PessoaRepository pessoaRepository = new PessoaRepository();
 			pstmt.setString(1, novaVacina.getNome());
-			pstmt.setString(2, novaVacina.getPaisOrigem());
-			pstmt.setObject(3, pessoaRepository.consultarPorId(novaVacina.getPesquisador().getId()));
+			pstmt.setInt(2, novaVacina.getPaisOrigem().getIdPais());
+			pstmt.setInt(3, novaVacina.getPesquisador().getId());
 			pstmt.setInt(4, novaVacina.getEstagio());
 			pstmt.setDate(5, Date.valueOf(novaVacina.getDataInicioPesquisa()));
 			pstmt.execute();
@@ -82,14 +81,14 @@ public class VacinaRepository implements BaseRepository<VacinaEntity> {
 	public boolean alterar(VacinaEntity alterarVacina) {
 		boolean retorno = false;
 		String query = " UPDATE vacinas "
-				+ " SET id_pessoa=?, nome=?, paisOrigem=?, estagio=?, dataInicioPesquisa=? "
+				+ " SET id_pessoa=?, nome=?, id_pais=?, estagio=?, dataInicioPesquisa=? "
 				+ " WHERE id=? ";
 		Connection conn = Banco.getConnection();
 		PreparedStatement pstmt = Banco.getPreparedStatementWithPk(conn, query);
 		try {
 			pstmt.setInt(1, alterarVacina.getPesquisador().getId());
 			pstmt.setString(2, alterarVacina.getNome());
-			pstmt.setString(3, alterarVacina.getPaisOrigem());
+			pstmt.setInt(3, alterarVacina.getPaisOrigem().getIdPais());
 			pstmt.setInt(4, alterarVacina.getEstagio());
 			pstmt.setDate(5, Date.valueOf(alterarVacina.getDataInicioPesquisa()));
 			pstmt.setInt(6, alterarVacina.getId());
@@ -116,12 +115,12 @@ public class VacinaRepository implements BaseRepository<VacinaEntity> {
 		try {
 			resultado = stmt.executeQuery(query);
 			PessoaRepository pessoaRepository = new PessoaRepository();
+			PaisRepository paisRepository = new PaisRepository();
 			if (resultado.next()) {
-				
 				vacina = new VacinaEntity();
 				vacina.setId(resultado.getInt("id_vacina"));
 				vacina.setNome(resultado.getString("nome"));
-				vacina.setPaisOrigem(resultado.getString("paisOrigem"));
+				vacina.setPaisOrigem(paisRepository.consultarPorId(resultado.getInt("id_pais")));
 				PessoaEntity pesquisador = pessoaRepository.consultarPorId(resultado.getInt("id_pessoa"));
 				vacina.setPesquisador(pesquisador);
 				vacina.setEstagio(resultado.getInt("estagio"));
@@ -153,11 +152,12 @@ public class VacinaRepository implements BaseRepository<VacinaEntity> {
 			
 			resultado = stmt.executeQuery(query);
 			PessoaRepository repository = new PessoaRepository();
+			PaisRepository paisRepository = new PaisRepository();
 			while (resultado.next()) {
 				VacinaEntity vacina = new VacinaEntity();
 				vacina.setId(resultado.getInt("id_vacina"));
 				vacina.setNome(resultado.getString("nome"));
-				vacina.setPaisOrigem(resultado.getString("paisOrigem"));
+				vacina.setPaisOrigem(paisRepository.consultarPorId(resultado.getInt("id_pais")));
 				vacina.setPesquisador(repository.consultarPorId(resultado.getInt("id_pessoa")));
 				vacina.setEstagio(resultado.getInt("estagio"));
 				vacina.setDataInicioPesquisa(resultado.getDate("dataInicioPesquisa").toLocalDate());

@@ -6,17 +6,18 @@ public class VacinaEntity {
 	
 	private Integer id;
 	private String nome;
-	private String paisOrigem;
+	private PaisEntity paisOrigem;
 	private PessoaEntity pesquisador;
 	private Integer estagio;
 	private LocalDate dataInicioPesquisa;
+	
 	
 	
 	public VacinaEntity() {
 		super();
 	}
 	
-	public VacinaEntity(Integer id, String nome, String paisOrigem, PessoaEntity idPesquisador, Integer estagio, LocalDate dataInicioPesquisa) {
+	public VacinaEntity(Integer id, String nome, PaisEntity paisOrigem, PessoaEntity idPesquisador, Integer estagio, LocalDate dataInicioPesquisa) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -38,10 +39,10 @@ public class VacinaEntity {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	public String getPaisOrigem() {
+	public PaisEntity getPaisOrigem() {
 		return paisOrigem;
 	}
-	public void setPaisOrigem(String paisOrigem) {
+	public void setPaisOrigem(PaisEntity paisOrigem) {
 		this.paisOrigem = paisOrigem;
 	}
 	public PessoaEntity getPesquisador() {

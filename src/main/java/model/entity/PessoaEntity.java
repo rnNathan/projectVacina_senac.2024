@@ -15,11 +15,12 @@ public class PessoaEntity  {
 	private String cpf;
 	private Integer tipoPessoaCadastrada;
 	private ArrayList<VacinacaoEntity> todasVacinas;
+	private PaisEntity paisOrigem;
 	
 	
 	
 	public PessoaEntity(int id, String nome, LocalDate dataNascimento, String sexo, String cpf,
-			Integer tipoPessoaCadastrada, ArrayList<VacinacaoEntity> todasVacinas) {
+			Integer tipoPessoaCadastrada, ArrayList<VacinacaoEntity> todasVacinas, PaisEntity paisOrigem) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -28,6 +29,7 @@ public class PessoaEntity  {
 		this.cpf = cpf;
 		this.tipoPessoaCadastrada = tipoPessoaCadastrada;
 		this.todasVacinas = todasVacinas;
+		this.paisOrigem = paisOrigem;
 
 	}
 	public PessoaEntity() {
@@ -75,6 +77,12 @@ public class PessoaEntity  {
 	}
 	public void setTodasVacinas(ArrayList<VacinacaoEntity> todasVacinas) {
 		this.todasVacinas = todasVacinas;
+	}
+	public PaisEntity getPaisOrigem() {
+		return paisOrigem;
+	}
+	public void setPaisOrigem(PaisEntity paisOrigem) {
+		this.paisOrigem = paisOrigem;
 	}
 	
 	
