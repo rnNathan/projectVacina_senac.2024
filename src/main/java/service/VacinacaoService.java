@@ -1,16 +1,31 @@
 package service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
+import exception.PessoaException;
 import model.entity.VacinacaoEntity;
 import model.repository.VacinacaoRepository;
 
 public class VacinacaoService {
 	
 	VacinacaoRepository repository = new VacinacaoRepository();
+	private static final int NOTA_MAXIMA = 5;
 	
-	public VacinacaoEntity salvar (VacinacaoEntity vacinacao) {
-		this.campoObrigatorio(vacinacao);
+	public VacinacaoEntity salvar (VacinacaoEntity vacinacao) throws PessoaException{
+		
+		if (vacinacao.getIdVacinacao() == 0 || vacinacao.getVacina() == null || vacinacao.getVacina().getId() == 0) {
+			throw new PessoaException("INFORME O ID DA PESSOA E A VACINA DA APLICAÇÃO");
+			
+		}
+		vacinacao.setDataVacina(LocalDate.now());
+		
+		if (vacinacao.getAvaliacao() == 0) {
+			vacinacao.setAvaliacao(NOTA_MAXIMA);
+		}
+		
+		
 		return repository.salvar(vacinacao);
 	}
 	
@@ -31,18 +46,10 @@ public class VacinacaoService {
 		return repository.consultarTodos();
 	}
 	
-	
-	private boolean campoObrigatorio (VacinacaoEntity entity) {
-		boolean retorno = false;
-		if (entity.getDataVacina() == null) {
-			System.out.println("PRECISA SER PREENCHIDO A DATA!");
-		} else {
-			retorno = true;
-		}
-		
-		
-		
-		return retorno;
+	public List<VacinacaoEntity> consultarTodasPessoaPorId(int id) {
+		return repository.consultarTodasVacinasPorPessoa(id);
 	}
+	
+	
 
 }

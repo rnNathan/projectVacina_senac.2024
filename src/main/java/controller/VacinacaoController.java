@@ -1,7 +1,9 @@
 package controller;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import exception.PessoaException;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
@@ -23,8 +25,8 @@ public class VacinacaoController {
 	@Path("/salvar")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public VacinacaoEntity salvar (VacinacaoEntity repository) {
-		return service.salvar(repository);
+	public VacinacaoEntity salvar (VacinacaoEntity novaVacinacao) throws PessoaException {
+		return service.salvar(novaVacinacao);
 	}
 	
 	
@@ -50,8 +52,18 @@ public class VacinacaoController {
 		return service.consultarPorId(id);
 	}
 	
+	@GET
+	@Path("/listarTodos")
+	@Produces(MediaType.APPLICATION_JSON)
 	public ArrayList<VacinacaoEntity> consultarTodos(){
 		return service.consultarTodos();
+	}
+	
+	@GET
+	@Path("/pessoa/{idPessoa}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<VacinacaoEntity> consultarVacinaPorIdPessoa(@PathParam("idPessoa")int id){
+		return service.consultarTodasPessoaPorId(id);
 	}
 	
 	

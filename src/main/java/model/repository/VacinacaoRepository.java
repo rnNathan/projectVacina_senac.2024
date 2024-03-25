@@ -9,18 +9,19 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import exception.PessoaException;
+import model.entity.VacinaEntity;
 import model.entity.VacinacaoEntity;
 
 public class VacinacaoRepository implements BaseRepository<VacinacaoEntity> {
 
 	@Override
 	public VacinacaoEntity salvar(VacinacaoEntity novaVacinacao) {
-		String query = "INSERT INTO vacina.aplicacao_vacina (idPessoa, vacina, dataVacina, avaliacao) values (?, ?, ?, ?)";
+		String query = "INSERT INTO vacina.aplicacao_vacina (idPessoa, id_vacina, dataVacina, avaliacao) values (?, ?, ?, ?)";
 		Connection conn = Banco.getConnection();
 		PreparedStatement pstmt = Banco.getPreparedStatementWithPk(conn, query);
 		try {
 			pstmt.setInt(1, novaVacinacao.getIdpessoa());
-			pstmt.setObject(2, novaVacinacao.getVacina());
+			pstmt.setInt(2, novaVacinacao.getVacina().getId());
 			pstmt.setDate(3, Date.valueOf(novaVacinacao.getDataVacina()));
 			pstmt.setInt(4, novaVacinacao.getAvaliacao());
 			pstmt.execute();
@@ -104,6 +105,7 @@ public class VacinacaoRepository implements BaseRepository<VacinacaoEntity> {
 		try {
 			resultado = stmt.executeQuery(query);
 			if (resultado.next()) {
+			
 				VacinaRepository repository = new VacinaRepository();
 				vacinacao = new VacinacaoEntity();
 				vacinacao.setIdVacinacao(resultado.getInt("id"));
@@ -125,6 +127,7 @@ public class VacinacaoRepository implements BaseRepository<VacinacaoEntity> {
 
 		return vacinacao;
 	}
+	
 
 	@Override
 	public ArrayList<VacinacaoEntity> consultarTodos() {
@@ -159,5 +162,37 @@ public class VacinacaoRepository implements BaseRepository<VacinacaoEntity> {
 	}
 	
 	
-
+	public ArrayList<VacinacaoEntity> consultarTodasVacinasPorPessoa (int id){
+		ArrayList<VacinacaoEntity> listaVacinacao = new ArrayList<VacinacaoEntity>();
+		Connection conn = Banco.getConnection();
+		Statement stmt = Banco.getStatement(conn);
+		
+		ResultSet resultado = null;
+		String query = " SELECT * FROM aplicacao_vacina where id_pessoa= " + id;
+		
+		try{
+			resultado = stmt.executeQuery(query);
+			VacinaRepository vacinaRepository = new VacinaRepository();
+			while(resultado.next()){
+				VacinacaoEntity vacinacao = new VacinacaoEntity();
+				vacinacao.setIdVacinacao(resultado.getInt("id"));
+				vacinacao.setIdpessoa(resultado.getInt("id_pessoa"));
+				vacinacao.setVacina(vacinaRepository.consultarPorId(resultado.getInt("id_vacina")));
+				vacinacao.setDataVacina(resultado.getDate("data_aplicacao").toLocalDate());
+				vacinacao.setAvaliacao(resultado.getInt("avaliacao"));
+				listaVacinacao.add(vacinacao);
+			}
+		} catch (SQLException erro){
+			System.out.println("Erro consultar todas as aplicações de vacinas");
+			System.out.println("Erro: " + erro.getMessage());
+		} finally {
+			Banco.closeResultSet(resultado);
+			Banco.closeStatement(stmt);
+			Banco.closeConnection(conn);
+		}
+		return listaVacinacao;
+		
+		
+	}
+	
 }

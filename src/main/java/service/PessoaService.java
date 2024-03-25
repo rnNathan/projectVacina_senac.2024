@@ -18,7 +18,7 @@ public class PessoaService  {
 		               entity.getDataNascimento() != null &&
 		               entity.getSexo() != null && !entity.getSexo().trim().isEmpty() &&
 		               entity.getCpf() != null && !entity.getCpf().trim().isEmpty() || entity.getCpf().length() == 11 &&
-		               entity.getTipoPessoaCadastrada() != null) {
+		               entity.getTipoPessoaCadastrada() != null && entity.getPaisOrigem().getNomePais() != null) {
 				
 				if (pessoaRepository.verificarCPF(entity)) {
 					throw new PessoaException("CPF JÁ CADASTRO NO BANCO DE DADOS!");

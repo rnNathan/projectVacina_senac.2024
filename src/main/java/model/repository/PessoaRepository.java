@@ -112,17 +112,13 @@ public class PessoaRepository implements BaseRepository<PessoaEntity> {
 		
 		boolean alterou = false;
 		String query = " UPDATE vacina.pessoa "
-				     + " SET nome=?, cpf=?, sexo=?, dataNascimento=?, tipoPessoaCadastrada=?, pais_origem=? "
+				     + " SET nome=?, cpf=?, sexo=?, dataNascimento=?, tipoPessoaCadastrada=?, id_pais=? "
 				     + " WHERE id_pessoa=? ";
 		Connection conn = Banco.getConnection();
 		PreparedStatement stmt = Banco.getPreparedStatementWithPk(conn, query);
 		try {
-			stmt.setString(1, pessoaEditada.getNome());
-			stmt.setString(2, pessoaEditada.getCpf());
-			stmt.setString(3, pessoaEditada.getSexo() + "");
-			stmt.setDate(4, Date.valueOf(pessoaEditada.getDataNascimento()));
-			stmt.setInt(5, pessoaEditada.getTipoPessoaCadastrada());
-			stmt.setInt(6, pessoaEditada.getPaisOrigem().getIdPais());
+			this.preencherValoresUpdateEInsert(stmt, pessoaEditada);
+			stmt.setInt(7, pessoaEditada.getId());
 			alterou = stmt.executeUpdate() > 0;
 		} catch (SQLException erro) {
 			System.out.println("Erro ao atualizar pessoa");
@@ -137,7 +133,7 @@ public class PessoaRepository implements BaseRepository<PessoaEntity> {
 
 	@Override
 	public PessoaEntity consultarPorId(int id) {
-		String query = "SELECT * FROM pessoa where id_pessoa = " + id;
+		String query = "SELECT * FROM vacina.pessoa where id_pessoa = " + id;
 		Connection conn = Banco.getConnection();
 		Statement stmt = Banco.getStatement(conn); 
 		PessoaEntity pessoa = null;
@@ -151,14 +147,17 @@ public class PessoaRepository implements BaseRepository<PessoaEntity> {
 				pessoa.setNome(resultado.getString("nome"));
 				pessoa.setDataNascimento(resultado.getDate("dataNascimento").toLocalDate());
 				pessoa.setSexo(resultado.getString("sexo"));
+				pessoa.setCpf(resultado.getString("cpf"));
 				pessoa.setTipoPessoaCadastrada(resultado.getInt("tipoPessoaCadastrada"));
 				PaisRepository paisRepository = new PaisRepository();
 				pessoa.setPaisOrigem(paisRepository.consultarPorId(resultado.getInt("id_pais")));
+				VacinacaoRepository repository = new VacinacaoRepository();
+				pessoa.setTodasVacinas(repository.consultarTodasVacinasPorPessoa(pessoa.getId()));
 				
 			}
 			
 		} catch (SQLException e) {
-			System.out.println("Erro ao consultar por ID.");
+			System.out.println("Erro ao consultar pessoa por ID.");
 			System.out.println("ERRO: " + e.getMessage());
 		}finally {
 			Banco.closeResultSet(resultado);
@@ -179,7 +178,7 @@ public class PessoaRepository implements BaseRepository<PessoaEntity> {
 			Connection conn = Banco.getConnection();
 			Statement stmt = Banco.getStatement(conn);
 			ResultSet resultado = null;
-			String query = "SELECT * FROM pessoa";
+			String query = "SELECT * FROM vacina.pessoa";
 			try {
 				resultado = stmt.executeQuery(query);
 				while (resultado.next()) {
@@ -188,6 +187,7 @@ public class PessoaRepository implements BaseRepository<PessoaEntity> {
 					pessoaEntity.setNome(resultado.getString("nome"));
 					pessoaEntity.setDataNascimento(resultado.getDate("dataNascimento").toLocalDate());
 					pessoaEntity.setSexo(resultado.getString("sexo"));
+					pessoaEntity.setCpf(resultado.getString("cpf"));
 					pessoaEntity.setTipoPessoaCadastrada(resultado.getInt("tipoPessoaCadastrada"));
 					PaisRepository paisRepository = new PaisRepository();
 					pessoaEntity.setPaisOrigem(paisRepository.consultarPorId(resultado.getInt("id_pais")));
