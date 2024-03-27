@@ -38,8 +38,8 @@ public class VacinaController {
 	@Path("/altera")
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public Boolean alterar (VacinaEntity altera) {
+	@Produces(MediaType.TEXT_XML)
+	public boolean alterar (VacinaEntity altera) {
 		return service.alterar(altera);
 	}
 	

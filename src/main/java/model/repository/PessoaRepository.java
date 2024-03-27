@@ -7,7 +7,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 
+import exception.PessoaException;
 import model.entity.PaisEntity;
 import model.entity.PessoaEntity;
 import model.entity.VacinacaoEntity;
@@ -17,7 +19,7 @@ import model.entity.VacinacaoEntity;
 public class PessoaRepository implements BaseRepository<PessoaEntity> {
 
 	
-	public boolean verificarCPF (PessoaEntity pessoaEntity) {
+	public boolean verificarCPF (PessoaEntity pessoaEntity) throws PessoaException {
 		Connection conn = Banco.getConnection();
 		Statement stmt = Banco.getStatement(conn);
 		ResultSet resultado = null;
@@ -31,8 +33,7 @@ public class PessoaRepository implements BaseRepository<PessoaEntity> {
 			}
 
 		} catch (SQLException e) {
-			System.out.println("Erro VERIFICAR CADASTRO");
-			System.out.println("Erro: " + e.getMessage());
+			throw new PessoaException("CPF JÁ CADASTRADO NO BANCO!");
 		} finally {
 			Banco.closeResultSet(resultado);
 			Banco.closeStatement(stmt);
@@ -44,7 +45,7 @@ public class PessoaRepository implements BaseRepository<PessoaEntity> {
 	
 	@Override
 	public PessoaEntity salvar(PessoaEntity novaEntidade) {
-		String query = "INSERT INTO vacina.pessoa (nome, dataNascimento, sexo, cpf, tipoPessoaCadastrada, id_pais)"
+		String query = "INSERT INTO vacina.pessoa (nome, dataNascimento, sexo, cpf, tipoPessoaCadastrada, id)"
 				+ " VALUES (?, ?, ?, ?, ?, ?)";
 		Connection conn = Banco.getConnection();
 		PreparedStatement pstmt = Banco.getPreparedStatementWithPk(conn, query);
@@ -112,7 +113,7 @@ public class PessoaRepository implements BaseRepository<PessoaEntity> {
 		
 		boolean alterou = false;
 		String query = " UPDATE vacina.pessoa "
-				     + " SET nome=?, cpf=?, sexo=?, dataNascimento=?, tipoPessoaCadastrada=?, id_pais=? "
+				     + " SET nome=?, cpf=?, sexo=?, dataNascimento=?, tipoPessoaCadastrada=?, id=? "
 				     + " WHERE id_pessoa=? ";
 		Connection conn = Banco.getConnection();
 		PreparedStatement stmt = Banco.getPreparedStatementWithPk(conn, query);
@@ -150,9 +151,9 @@ public class PessoaRepository implements BaseRepository<PessoaEntity> {
 				pessoa.setCpf(resultado.getString("cpf"));
 				pessoa.setTipoPessoaCadastrada(resultado.getInt("tipoPessoaCadastrada"));
 				PaisRepository paisRepository = new PaisRepository();
-				pessoa.setPaisOrigem(paisRepository.consultarPorId(resultado.getInt("id_pais")));
-				VacinacaoRepository repository = new VacinacaoRepository();
-				pessoa.setTodasVacinas(repository.consultarTodasVacinasPorPessoa(pessoa.getId()));
+				pessoa.setPaisOrigem(paisRepository.consultarPorId(resultado.getInt("id")));
+				//VacinacaoRepository repository = new VacinacaoRepository();
+				//pessoa.setTodasVacinas(repository.consultarTodasVacinasPorPessoa(resultado.getInt("id")));
 				
 			}
 			
@@ -173,7 +174,7 @@ public class PessoaRepository implements BaseRepository<PessoaEntity> {
 	@Override
 	public ArrayList<PessoaEntity> consultarTodos() {
 		
-			ArrayList  <PessoaEntity> listaPessoa = new ArrayList<PessoaEntity>();
+			ArrayList<PessoaEntity> listaPessoa = new ArrayList<PessoaEntity>();
 			
 			Connection conn = Banco.getConnection();
 			Statement stmt = Banco.getStatement(conn);
@@ -183,14 +184,16 @@ public class PessoaRepository implements BaseRepository<PessoaEntity> {
 				resultado = stmt.executeQuery(query);
 				while (resultado.next()) {
 					PessoaEntity pessoaEntity = new PessoaEntity();
-					pessoaEntity.setId(Integer.parseInt(resultado.getString("id_pessoa")));
+					pessoaEntity.setId(resultado.getInt("id_pessoa"));
 					pessoaEntity.setNome(resultado.getString("nome"));
 					pessoaEntity.setDataNascimento(resultado.getDate("dataNascimento").toLocalDate());
 					pessoaEntity.setSexo(resultado.getString("sexo"));
 					pessoaEntity.setCpf(resultado.getString("cpf"));
 					pessoaEntity.setTipoPessoaCadastrada(resultado.getInt("tipoPessoaCadastrada"));
 					PaisRepository paisRepository = new PaisRepository();
-					pessoaEntity.setPaisOrigem(paisRepository.consultarPorId(resultado.getInt("id_pais")));
+					pessoaEntity.setPaisOrigem(paisRepository.consultarPorId(resultado.getInt("id")));
+					//VacinacaoRepository repository =  new VacinacaoRepository();
+					//pessoaEntity.setTodasVacinas(repository.consultarTodasVacinasPorPessoa(pessoaEntity.getId()));
 					listaPessoa.add(pessoaEntity);
 				}
 				

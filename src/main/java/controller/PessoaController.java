@@ -15,8 +15,6 @@ import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import model.entity.PessoaEntity;
-import model.entity.VacinacaoEntity;
-import model.repository.PessoaRepository;
 import service.PessoaService;
 
 @Path("/pessoa")
@@ -28,38 +26,39 @@ public class PessoaController {
 	@Path("/salvar")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public PessoaEntity salvar(PessoaEntity novaPessoa) throws PessoaException {
+	public PessoaEntity salvar(PessoaEntity novaPessoa)  throws PessoaException{
 		return this.pessoaService.salvar(novaPessoa);
 	}
 	
+	
 	@PUT
-	@Path("/id")
+	@Path("/alterar")
 	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public boolean alterar (@PathParam("id") PessoaEntity novaVacina) {
+	@Produces(MediaType.TEXT_PLAIN)
+	public boolean alterar (PessoaEntity novaVacina) {
 		return pessoaService.alterar(novaVacina);
 	}
 	
 	@DELETE
-	@Path("/{id}")
+	@Path("/excluir/{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public boolean excluir (@PathParam("id")int id) throws PessoaException {
+	public boolean excluir (@PathParam("id")int id) {
 		return this.pessoaService.excluir(id);
 	}
 	
 	
 	@GET
-	@Path("/id")
+	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public PessoaEntity consultarPorId(@PathParam("id") int id) {
 		return pessoaService.consultarPorId(id);
 	}
 	
 	@GET 
-	@Path("listar")
+	@Path("/listar")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public ArrayList<PessoaEntity> listarTodos()  throws PessoaException {
+	public ArrayList<PessoaEntity> listarTodos() {
 		return this.pessoaService.listarTodos();
 		
 	}

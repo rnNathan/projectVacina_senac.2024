@@ -13,30 +13,10 @@ public class PessoaService  {
 	
 	public PessoaEntity salvar (PessoaEntity entity) throws PessoaException {
 		
+		validarCamposObrigatorios(entity);
+		pessoaRepository.verificarCPF(entity);
+		return pessoaRepository.salvar(entity);
 		
-			if (entity.getNome() != null && !entity.getNome().trim().isEmpty() &&
-		               entity.getDataNascimento() != null &&
-		               entity.getSexo() != null && !entity.getSexo().trim().isEmpty() &&
-		               entity.getCpf() != null && !entity.getCpf().trim().isEmpty() || entity.getCpf().length() == 11 &&
-		               entity.getTipoPessoaCadastrada() != null && entity.getPaisOrigem().getNomePais() != null) {
-				
-				if (pessoaRepository.verificarCPF(entity)) {
-					throw new PessoaException("CPF JÁ CADASTRO NO BANCO DE DADOS!");
-					
-				} else {
-					entity = pessoaRepository.salvar(entity);
-					
-				}
-				
-			} else {
-				
-				throw new PessoaException("UM DOS CAMPOS NÃO ESTÁ PREENCHIDO");
-			}
-		
-			return entity;
-	
-		
-
 	}
 	
 	public Boolean alterar (PessoaEntity alterarPessoa) {
@@ -53,5 +33,31 @@ public class PessoaService  {
 	
 	public ArrayList <PessoaEntity> listarTodos(){
 		return this.pessoaRepository.consultarTodos();
+	}
+	
+	private void validarCamposObrigatorios(PessoaEntity p) throws PessoaException{
+		String mensagemValidacao = "";
+		if(p.getNome() == null || p.getNome().isEmpty()) {
+			mensagemValidacao += " - informe o nome \n";
+		}
+		if(p.getDataNascimento() == null) {
+			mensagemValidacao += " - informe a data de nascimento \n";
+		}
+		if(p.getCpf() == null || p.getCpf().isEmpty() || p.getCpf().length() != 11) {
+			mensagemValidacao += " - informe o CPF";
+		}
+		if(p.getSexo().equals(null)) {
+			mensagemValidacao += " - informe o sexo";
+		}
+		if(p.getTipoPessoaCadastrada() < 1 || p.getTipoPessoaCadastrada() > 3) {
+			mensagemValidacao += " - informe o tipo (entre 1 e 3)";
+		}
+		if(p.getPaisOrigem() == null) {
+			mensagemValidacao += " - informe o país de origem";
+		}
+		
+		if(!mensagemValidacao.isEmpty()) {
+			throw new PessoaException("Preencha o(s) seguinte(s) campo(s) \n " + mensagemValidacao);
+		}
 	}
 }

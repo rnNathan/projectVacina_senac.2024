@@ -13,20 +13,20 @@ public class VacinacaoService {
 	VacinacaoRepository repository = new VacinacaoRepository();
 	private static final int NOTA_MAXIMA = 5;
 	
-	public VacinacaoEntity salvar (VacinacaoEntity vacinacao) throws PessoaException{
+	public VacinacaoEntity salvar (VacinacaoEntity novaVacinacao) throws PessoaException{
 		
-		if (vacinacao.getIdVacinacao() == 0 || vacinacao.getVacina() == null || vacinacao.getVacina().getId() == 0) {
+		if (novaVacinacao.getIdpessoa() == 0 || novaVacinacao.getVacina() == null || novaVacinacao.getVacina().getId() == 0) {
 			throw new PessoaException("INFORME O ID DA PESSOA E A VACINA DA APLICAÇÃO");
 			
 		}
-		vacinacao.setDataVacina(LocalDate.now());
+		novaVacinacao.setDataVacina(LocalDate.now());
 		
-		if (vacinacao.getAvaliacao() == 0) {
-			vacinacao.setAvaliacao(NOTA_MAXIMA);
+		if (novaVacinacao.getAvaliacao() == 0) {
+			novaVacinacao.setAvaliacao(NOTA_MAXIMA);
 		}
 		
 		
-		return repository.salvar(vacinacao);
+		return repository.salvar(novaVacinacao);
 	}
 	
 	

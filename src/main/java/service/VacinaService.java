@@ -1,9 +1,7 @@
 package service;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 
-import exception.PessoaException;
 import model.entity.VacinaEntity;
 import model.repository.VacinaRepository;
 

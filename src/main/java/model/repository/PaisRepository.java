@@ -14,8 +14,8 @@ public class PaisRepository implements BaseRepository<PaisEntity> {
 	@Override
 	public PaisEntity salvar(PaisEntity novoPais) {
 		String query = "INSERT INTO vacina.paises "
-				+ "(nome_pais, sigla, id_pessoa) "
-				+ "VALUES(?, ?, ?);";
+				+ "(nome_pais, sigla) "
+				+ "VALUES(?, ?);";
 		Connection conn = Banco.getConnection();
 		PreparedStatement pstmt = Banco.getPreparedStatementWithPk(conn, query);
 		try {
@@ -52,7 +52,7 @@ public class PaisRepository implements BaseRepository<PaisEntity> {
 
 	@Override
 	public PaisEntity consultarPorId(int id) {
-		String query = "SELECT * FROM vacina.paises where id_pais = " + id;
+		String query = "SELECT * FROM vacina.paises where id = " + id;
 		Connection conn = Banco.getConnection();
 		Statement stmt = Banco.getStatement(conn);
 		PaisEntity pais = null;
@@ -63,7 +63,7 @@ public class PaisRepository implements BaseRepository<PaisEntity> {
 			if (resultado.next())
 			{
 				pais = new PaisEntity();
-				pais.setIdPais(resultado.getInt("id_pais"));
+				pais.setIdPais(resultado.getInt("id"));
 				pais.setNomePais(resultado.getString("nome_pais"));
 				pais.setSigla(resultado.getString("sigla"));
 			}
@@ -85,7 +85,7 @@ public class PaisRepository implements BaseRepository<PaisEntity> {
 	@Override
 	public ArrayList<PaisEntity> consultarTodos() {
 		ArrayList<PaisEntity> listaPais = new ArrayList<PaisEntity>();
-		String query = "SELECT * FROM vacina.pais";
+		String query = "SELECT * FROM vacina.paises";
 		Connection conn = Banco.getConnection();
 		Statement stmt = Banco.getStatement(conn);
 		PaisEntity pais = null;
@@ -95,7 +95,7 @@ public class PaisRepository implements BaseRepository<PaisEntity> {
 			while (resultado.next())
 			{
 				pais = new PaisEntity();
-				pais.setIdPais(resultado.getInt("id_pais"));
+				pais.setIdPais(resultado.getInt("id"));
 				pais.setNomePais(resultado.getString("nome_pais"));
 				pais.setSigla(resultado.getString("sigla"));
 			}
