@@ -31,7 +31,7 @@ public class VacinaController {
 	@Path("/excluir/{id}")
 	@DELETE
 	@Consumes(MediaType.APPLICATION_JSON)
-	public boolean excluir(@PathParam("id") int id) {
+	public boolean excluir(@PathParam("id") int id) throws PessoaException {
 		return service.excluir(id);
 	}
 	

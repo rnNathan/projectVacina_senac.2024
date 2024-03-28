@@ -7,16 +7,22 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Iterator;
 
-import model.entity.PessoaEntity;
+import javax.management.loading.PrivateClassLoader;
+
+import jakarta.ws.rs.client.Entity;
 import model.entity.VacinaEntity;
+import model.entity.VacinacaoEntity;
 
 public class VacinaRepository implements BaseRepository<VacinaEntity> {
+	
+	private VacinacaoRepository repository = new VacinacaoRepository();
 
 	@Override
 	public VacinaEntity salvar(VacinaEntity novaVacina) {
 
-		String query = "INSERT INTO vacina.vacinas (nome, id, id_pessoa, estagio, dataInicioPesquisa) values (?, ?, ?, ?, ?)"; 
+		String query = "INSERT INTO vacina.vacinas (nome, id, id_pessoa, estagio, dataInicioPesquisa) values (?, ?, ?, ?, ?, ?)"; 
 		Connection conn = Banco.getConnection();
 		PreparedStatement pstmt = Banco.getPreparedStatementWithPk(conn, query);
 		
@@ -90,6 +96,7 @@ public class VacinaRepository implements BaseRepository<VacinaEntity> {
 			pstmt.setInt(3, alterarVacina.getPaisOrigem().getIdPais());
 			pstmt.setInt(4, alterarVacina.getEstagio());
 			pstmt.setDate(5, Date.valueOf(alterarVacina.getDataInicioPesquisa()));
+			pstmt.setDouble(6, alterarVacina.getMediaVacina());
 			pstmt.setInt(6, alterarVacina.getId());
 			retorno = pstmt.executeUpdate() > 0;
 
@@ -174,5 +181,7 @@ public class VacinaRepository implements BaseRepository<VacinaEntity> {
 		return vacinas;
 		
 	}
+	
+	
 	
 }

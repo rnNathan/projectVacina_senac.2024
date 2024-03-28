@@ -7,8 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-
-import exception.PessoaException;
+import model.repository.VacinacaoRepository;
 import model.entity.VacinaEntity;
 import model.entity.VacinacaoEntity;
 
@@ -20,7 +19,7 @@ public class VacinacaoRepository implements BaseRepository<VacinacaoEntity> {
 		Connection conn = Banco.getConnection();
 		PreparedStatement pstmt = Banco.getPreparedStatementWithPk(conn, query);
 		try {
-			pstmt.setInt(1, novaVacinacao.getIdpessoa());
+			pstmt.setInt(1, novaVacinacao.getIdPessoa());
 			pstmt.setInt(2, novaVacinacao.getVacina().getId());
 			pstmt.setDate(3, Date.valueOf(novaVacinacao.getDataVacina()));
 			pstmt.setInt(4, novaVacinacao.getAvaliacao());
@@ -74,7 +73,7 @@ public class VacinacaoRepository implements BaseRepository<VacinacaoEntity> {
 		PreparedStatement pstmt = Banco.getPreparedStatementWithPk(conn, query);
 		try {
 			
-			pstmt.setInt(1, vacinaEditada.getIdpessoa());
+			pstmt.setInt(1, vacinaEditada.getIdPessoa());
 			pstmt.setInt(2, vacinaEditada.getVacina().getId());
 			pstmt.setDate(3, Date.valueOf(vacinaEditada.getDataVacina()));
 			pstmt.setInt(4, vacinaEditada.getAvaliacao());
@@ -142,7 +141,7 @@ public class VacinacaoRepository implements BaseRepository<VacinacaoEntity> {
 			while(resultado.next()){
 				VacinacaoEntity vacinacao = new VacinacaoEntity();
 				vacinacao.setIdVacinacao(resultado.getInt("id"));
-				vacinacao.setIdpessoa(resultado.getInt("id_pessoa"));
+				vacinacao.setIdPessoa(resultado.getInt("id_pessoa"));
 				vacinacao.setVacina(vacinaRepository.consultarPorId(resultado.getInt("id_vacina")));
 				vacinacao.setDataVacina(resultado.getDate("data_aplicacao").toLocalDate());
 				vacinacao.setAvaliacao(resultado.getInt("avaliacao"));
@@ -176,7 +175,7 @@ public class VacinacaoRepository implements BaseRepository<VacinacaoEntity> {
 				VacinacaoEntity vacinacao = new VacinacaoEntity();
 				
 				vacinacao.setIdVacinacao(resultado.getInt("id"));
-				vacinacao.setIdpessoa(resultado.getInt("id_pessoa"));
+				vacinacao.setIdPessoa(resultado.getInt("id_pessoa"));
 				
 				VacinaEntity vacinaAplicada = vacinaRepository.consultarPorId(resultado.getInt("id_vacina"));
 				vacinacao.setVacina(vacinaAplicada);

@@ -42,7 +42,7 @@ public class PessoaController {
 	@DELETE
 	@Path("/excluir/{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public boolean excluir (@PathParam("id")int id) {
+	public boolean excluir (@PathParam("id")int id) throws PessoaException {
 		return this.pessoaService.excluir(id);
 	}
 	

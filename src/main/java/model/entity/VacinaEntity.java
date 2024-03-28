@@ -4,12 +4,13 @@ import java.time.LocalDate;
 
 public class VacinaEntity {
 	
-	private Integer id;
+	private int id;
 	private String nome;
 	private PaisEntity paisOrigem;
 	private PessoaEntity pesquisador;
 	private Integer estagio;
 	private LocalDate dataInicioPesquisa;
+	private double mediaVacina;
 	
 	
 	
@@ -17,7 +18,7 @@ public class VacinaEntity {
 		super();
 	}
 	
-	public VacinaEntity(Integer id, String nome, PaisEntity paisOrigem, PessoaEntity idPesquisador, Integer estagio, LocalDate dataInicioPesquisa) {
+	public VacinaEntity(int id, String nome, PaisEntity paisOrigem, PessoaEntity idPesquisador, Integer estagio, LocalDate dataInicioPesquisa,  double mediaVacina) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -25,6 +26,7 @@ public class VacinaEntity {
 		this.pesquisador = idPesquisador;
 		this.estagio = estagio;
 		this.dataInicioPesquisa = dataInicioPesquisa;
+		this.mediaVacina = mediaVacina;
 	}
 	
 	public Integer getId() {
@@ -51,10 +53,10 @@ public class VacinaEntity {
 	public void setPesquisador(PessoaEntity pesquisador) {
 		this.pesquisador = pesquisador;
 	}
-	public Integer getEstagio() {
+	public int getEstagio() {
 		return estagio;
 	}
-	public void setEstagio(Integer estagio) {
+	public void setEstagio(int estagio) {
 		this.estagio = estagio;
 	}
 
@@ -65,6 +67,16 @@ public class VacinaEntity {
 	public void setDataInicioPesquisa(LocalDate dataInicioPesquisa) {
 		this.dataInicioPesquisa = dataInicioPesquisa;
 	}
+
+	public double getMediaVacina() {
+		return mediaVacina;
+	}
+
+	public void setMediaVacina(double mediaVacina) {
+		this.mediaVacina = mediaVacina;
+	}
+	
+	
 	
 	
 	

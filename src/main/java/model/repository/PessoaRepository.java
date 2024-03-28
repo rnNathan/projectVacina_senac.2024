@@ -213,4 +213,7 @@ public class PessoaRepository implements BaseRepository<PessoaEntity> {
 		return listaPessoa;
 	}
 	
+	
+	
+	
 }

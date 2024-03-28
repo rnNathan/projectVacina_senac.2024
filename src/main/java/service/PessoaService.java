@@ -5,58 +5,67 @@ import java.util.IllegalFormatCodePointException;
 
 import exception.PessoaException;
 import model.entity.PessoaEntity;
+import model.entity.VacinacaoEntity;
 import model.repository.PessoaRepository;
 
-public class PessoaService  {
-	
+import model.repository.VacinacaoRepository;
+
+public class PessoaService {
+
 	private PessoaRepository pessoaRepository = new PessoaRepository();
-	
-	public PessoaEntity salvar (PessoaEntity entity) throws PessoaException {
-		
+	private VacinacaoEntity entity = new VacinacaoEntity();
+
+	public PessoaEntity salvar(PessoaEntity entity) throws PessoaException {
+
 		validarCamposObrigatorios(entity);
 		pessoaRepository.verificarCPF(entity);
 		return pessoaRepository.salvar(entity);
-		
+
 	}
-	
-	public Boolean alterar (PessoaEntity alterarPessoa) {
+
+	public Boolean alterar(PessoaEntity alterarPessoa) {
 		return pessoaRepository.alterar(alterarPessoa);
 	}
-	
+
 	public PessoaEntity consultarPorId(int id) {
 		return pessoaRepository.consultarPorId(id);
 	}
-	
-	public boolean excluir (int id) {
+
+	public boolean excluir(int id) throws PessoaException {
+
+		if (entity.getIdPessoa() == 0) {
+			throw new PessoaException("Não pode ser excluido a pessoa, pois ela tem uma vacinação cadastrada");
+		}
+
 		return this.pessoaRepository.excluir(id);
 	}
-	
-	public ArrayList <PessoaEntity> listarTodos(){
+
+	public ArrayList<PessoaEntity> listarTodos() {
 		return this.pessoaRepository.consultarTodos();
 	}
-	
-	private void validarCamposObrigatorios(PessoaEntity p) throws PessoaException{
+
+	private void validarCamposObrigatorios(PessoaEntity p) throws PessoaException {
 		String mensagemValidacao = "";
-		if(p.getNome() == null || p.getNome().isEmpty()) {
+		if (p.getNome() == null || p.getNome().isEmpty()) {
 			mensagemValidacao += " - informe o nome \n";
 		}
-		if(p.getDataNascimento() == null) {
+		if (p.getDataNascimento() == null) {
 			mensagemValidacao += " - informe a data de nascimento \n";
 		}
-		if(p.getCpf() == null || p.getCpf().isEmpty() || p.getCpf().length() != 11) {
+		if (p.getCpf() == null || p.getCpf().isEmpty() || p.getCpf().length() != 11) {
 			mensagemValidacao += " - informe o CPF";
 		}
-		if(p.getSexo().equals(null)) {
+		if (p.getSexo().equals(null)) {
 			mensagemValidacao += " - informe o sexo";
 		}
-		if(p.getTipoPessoaCadastrada() < 1 || p.getTipoPessoaCadastrada() > 3) {
+		if (p.getTipoPessoaCadastrada() < 1 || p.getTipoPessoaCadastrada() > 3) {
 			mensagemValidacao += " - informe o tipo (entre 1 e 3)";
 		}
-		if(p.getPaisOrigem() == null) {
+		if (p.getPaisOrigem() == null) {
 			mensagemValidacao += " - informe o país de origem";
 		}
-		
-		if(!mensagemValidacao.isEmpty()) {
+
+		if (!mensagemValidacao.isEmpty()) {
 			throw new PessoaException("Preencha o(s) seguinte(s) campo(s) \n " + mensagemValidacao);
 		}
 	}
