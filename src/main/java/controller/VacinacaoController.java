@@ -31,9 +31,9 @@ public class VacinacaoController {
 	
 	
 	@DELETE
-	@Path("/excluir")
+	@Path("/excluir/{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public boolean excluir (int id) {
+	public boolean excluir (@PathParam("id")int id) {
 		return service.excluir(id);
 	}
 	

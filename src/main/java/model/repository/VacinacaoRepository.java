@@ -43,15 +43,14 @@ public class VacinacaoRepository implements BaseRepository<VacinacaoEntity> {
 
 	@Override
 	public boolean excluir(int id) {
-		String query = "SELECT aplicacao_vacina where id = " + id;
+		String query = "DELETE FROM aplicacao_vacina where id = " + id;
 		Connection conn = Banco.getConnection();
 		Statement stmt = Banco.getStatement(conn);
-		ResultSet resultado = null;
 		boolean excluiu = false;
 		
 		try {
-			resultado = stmt.executeQuery(query);
-			if (resultado.next()) {
+			
+			if (stmt.executeUpdate(query) == 1) {
 				excluiu = true;
 			}
 			
@@ -59,11 +58,10 @@ public class VacinacaoRepository implements BaseRepository<VacinacaoEntity> {
 			System.out.println("ERRO AO EXCLUIR!");
 			System.out.println("ERRO: " + e.getMessage());
 		}finally {
-			Banco.closeResultSet(resultado);
 			Banco.closeStatement(stmt);
 			Banco.closeConnection(conn);
 		}
-		return false;
+		return excluiu;
 	}
 
 	@Override
@@ -109,7 +107,7 @@ public class VacinacaoRepository implements BaseRepository<VacinacaoEntity> {
 				VacinaRepository repository = new VacinaRepository();
 				vacinacao = new VacinacaoEntity();
 				vacinacao.setIdVacinacao(resultado.getInt("id"));
-				vacinacao.setIdpessoa(resultado.getInt("id_pessoa"));
+				vacinacao.setIdPessoa(resultado.getInt("id_pessoa"));
 				vacinacao.setVacina(repository.consultarPorId(resultado.getInt("id_vacina")));
 				vacinacao.setDataVacina(resultado.getDate("data_aplicacao").toLocalDate());
 				vacinacao.setAvaliacao(resultado.getInt("avaliacao"));
@@ -168,16 +166,21 @@ public class VacinacaoRepository implements BaseRepository<VacinacaoEntity> {
 		Statement stmt = Banco.getStatement(conn);
 		
 		ResultSet resultado = null;
-		String query = " SELECT * FROM aplicacao_vacina where id_pessoa= " + id;
+		String query = " SELECT * FROM aplicacao_vacina where id_pessoa = " + id;
 		
 		try{
 			resultado = stmt.executeQuery(query);
 			VacinaRepository vacinaRepository = new VacinaRepository();
 			while(resultado.next()){
+				
 				VacinacaoEntity vacinacao = new VacinacaoEntity();
+				
 				vacinacao.setIdVacinacao(resultado.getInt("id"));
 				vacinacao.setIdpessoa(resultado.getInt("id_pessoa"));
-				vacinacao.setVacina(vacinaRepository.consultarPorId(resultado.getInt("id_vacina")));
+				
+				VacinaEntity vacinaAplicada = vacinaRepository.consultarPorId(resultado.getInt("id_vacina"));
+				vacinacao.setVacina(vacinaAplicada);
+				
 				vacinacao.setDataVacina(resultado.getDate("data_aplicacao").toLocalDate());
 				vacinacao.setAvaliacao(resultado.getInt("avaliacao"));
 				listaVacinacao.add(vacinacao);

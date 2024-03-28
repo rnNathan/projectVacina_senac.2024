@@ -28,17 +28,17 @@ public class VacinaController {
 		return service.salvar(vacina);
 	}
 	
-	@Path("/excluir")
+	@Path("/excluir/{id}")
 	@DELETE
 	@Consumes(MediaType.APPLICATION_JSON)
-	public boolean excluir(int id) {
+	public boolean excluir(@PathParam("id") int id) {
 		return service.excluir(id);
 	}
 	
 	@Path("/altera")
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.TEXT_XML)
+	@Produces(MediaType.TEXT_PLAIN)
 	public boolean alterar (VacinaEntity altera) {
 		return service.alterar(altera);
 	}

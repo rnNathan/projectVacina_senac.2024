@@ -31,7 +31,6 @@ public class VacinaRepository implements BaseRepository<VacinaEntity> {
 			
 			ResultSet resultado = pstmt.getGeneratedKeys();
 			if (resultado.next()) {
-				
 				novaVacina.setId(resultado.getInt(1));
 			}
 
@@ -51,15 +50,15 @@ public class VacinaRepository implements BaseRepository<VacinaEntity> {
 
 	@Override
 	public boolean excluir(int id) {
-		String query = "delete from vacinas where id = " + id;
+		String query = "delete from vacinas where id_vacina = " + id;
 		Connection conn = Banco.getConnection();
 		Statement stmt = Banco.getStatement(conn);
 		ResultSet resultado = null;
 		boolean retorno = false;
 
 		try {
-			resultado = stmt.executeQuery(query);
-			if (resultado.next()) {
+			
+			if (stmt.executeUpdate(query) == 1) {
 				retorno = true;
 
 			}
@@ -82,7 +81,7 @@ public class VacinaRepository implements BaseRepository<VacinaEntity> {
 		boolean retorno = false;
 		String query = " UPDATE vacinas "
 				+ " SET id_pessoa=?, nome=?, id=?, estagio=?, dataInicioPesquisa=? "
-				+ " WHERE id=? ";
+				+ " WHERE id_vacina=? ";
 		Connection conn = Banco.getConnection();
 		PreparedStatement pstmt = Banco.getPreparedStatementWithPk(conn, query);
 		try {

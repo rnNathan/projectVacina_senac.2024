@@ -144,7 +144,7 @@ public class PessoaRepository implements BaseRepository<PessoaEntity> {
 			 resultado = stmt.executeQuery(query);
 			if (resultado.next()) {
 				pessoa = new PessoaEntity();
-				pessoa.setId(Integer.parseInt(resultado.getString("id_pessoa")));
+				pessoa.setId(resultado.getInt("id_pessoa"));
 				pessoa.setNome(resultado.getString("nome"));
 				pessoa.setDataNascimento(resultado.getDate("dataNascimento").toLocalDate());
 				pessoa.setSexo(resultado.getString("sexo"));
@@ -153,7 +153,7 @@ public class PessoaRepository implements BaseRepository<PessoaEntity> {
 				PaisRepository paisRepository = new PaisRepository();
 				pessoa.setPaisOrigem(paisRepository.consultarPorId(resultado.getInt("id")));
 				//VacinacaoRepository repository = new VacinacaoRepository();
-				//pessoa.setTodasVacinas(repository.consultarTodasVacinasPorPessoa(resultado.getInt("id")));
+				//pessoa.setTodasVacinas(repository.consultarTodasVacinasPorPessoa(pessoa.getId()));
 				
 			}
 			
