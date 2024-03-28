@@ -8,18 +8,21 @@ CREATE TABLE IF NOT EXISTS vacina.pessoa (
     dataNascimento DATE NOT NULL,
     sexo VARCHAR(10) NOT NULL,
     cpf VARCHAR(14) NOT NULL,
-    tipoPessoaCadastrada INTEGER NOT null comment '1- Pesquisador; 2- Voluntário; 3- Público Geral'
+    tipoPessoaCadastrada INTEGER NOT null comment '1- Pesquisador; 2- Voluntário; 3- Público Geral',
+    id int not null,
+    foreign key (id) references vacina.paises (id)
 );
 
 
 CREATE TABLE IF NOT EXISTS vacina.vacinas (
     id_vacina INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(255) NOT NULL,
-    paisOrigem VARCHAR(30) NOT NULL,
+   	id int not null,
     id_pessoa INT NOT NULL,
     estagio INTEGER NOT null comment '1- Inicial; 2- Teste; 3- Aplicação em massa',
     dataInicioPesquisa DATE NOT NULL,
-    FOREIGN KEY (id_pessoa) REFERENCES vacina.pessoa(id)
+    FOREIGN KEY (id_pessoa) REFERENCES vacina.pessoa(id),
+    foreign key (id) references vacina.paises (id)
 );
 
 
@@ -33,4 +36,10 @@ create table if not exists vacina.aplicacao_vacina (
     foreign key (id_vacina) references vacina.vacinas (id_vacina)
 );
 
+create table if not exists vacina.paise (
+	id int not null auto_increment primary key,
+	nome_pais varchar (100) not null,
+	sigla varchar (2) not null
+
+);
 
