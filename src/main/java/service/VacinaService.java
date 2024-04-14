@@ -6,6 +6,7 @@ import exception.PessoaException;
 import model.entity.VacinaEntity;
 import model.entity.VacinacaoEntity;
 import model.repository.VacinaRepository;
+import model.repository.VacinacaoRepository;
 
 
 public class VacinaService {
@@ -16,16 +17,18 @@ public class VacinaService {
 	VacinacaoEntity entityVacinacao = new VacinacaoEntity();
 
 	public VacinaEntity salvar(VacinaEntity entity) {
-		
-		
 		return repository.salvar(entity);
 	}
 
 	public boolean excluir (int id) throws PessoaException {
 		
-		if (entityVacinacao.getVacina() == null || entityVacinacao.getVacina().getId().equals(0)) {
-			throw new PessoaException("ERRO AO EXCLUIR UMA VACINA");
+		VacinacaoRepository vacinacao = new VacinacaoRepository();
+		ArrayList<VacinacaoEntity> listVacina = vacinacao.consultarTodasVacinasPorId(id);
+		
+		if (listVacina.size() > 0) {
+			throw new PessoaException("Não pode excluir uma vacina, pois ela tem uma vacina cadastrada");
 		}
+		
 		
 		return repository.excluir(id);
 	}

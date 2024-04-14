@@ -1,7 +1,7 @@
 package service;
 
 import java.util.ArrayList;
-import java.util.IllegalFormatCodePointException;
+
 
 import exception.PessoaException;
 import model.entity.PessoaEntity;
@@ -13,7 +13,7 @@ import model.repository.VacinacaoRepository;
 public class PessoaService {
 
 	private PessoaRepository pessoaRepository = new PessoaRepository();
-	private VacinacaoEntity entity = new VacinacaoEntity();
+	
 
 	public PessoaEntity salvar(PessoaEntity entity) throws PessoaException {
 
@@ -32,10 +32,14 @@ public class PessoaService {
 	}
 
 	public boolean excluir(int id) throws PessoaException {
-
-		if (entity.getIdPessoa() == 0) {
-			throw new PessoaException("Não pode ser excluido a pessoa, pois ela tem uma vacinação cadastrada");
+		VacinacaoRepository vacinacao = new VacinacaoRepository();
+		
+		ArrayList<VacinacaoEntity> listVacina = vacinacao.consultarTodasVacinasPorPessoa(id);
+		
+		if (listVacina.size() > 0) {
+			throw new PessoaException("Não pode excluir uma pessoa, pois ela tem uma vacina cadastrada");
 		}
+		
 
 		return this.pessoaRepository.excluir(id);
 	}
