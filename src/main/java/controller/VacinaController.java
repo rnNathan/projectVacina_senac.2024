@@ -11,6 +11,7 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
+import model.vacinaSeletor;
 import model.entity.VacinaEntity;
 import service.VacinaService;
 
@@ -55,6 +56,14 @@ public class VacinaController {
 	@Produces(MediaType.APPLICATION_JSON)
 	public ArrayList<VacinaEntity> listaTodas(){
 		return service.listarTodas();
+	}
+	
+	@Path("/filtro")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public ArrayList<VacinaEntity> consultarPorFiltro(vacinaSeletor seletor){
+		return service.consultarPorFiltro(seletor);
 	}
 
 }

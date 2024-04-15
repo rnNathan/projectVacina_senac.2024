@@ -3,6 +3,7 @@ package service;
 import java.util.ArrayList;
 
 import exception.PessoaException;
+import model.vacinaSeletor;
 import model.entity.VacinaEntity;
 import model.entity.VacinacaoEntity;
 import model.repository.VacinaRepository;
@@ -43,6 +44,10 @@ public class VacinaService {
 
 	public ArrayList<VacinaEntity> listarTodas() {
 		return repository.consultarTodos();
+	}
+	
+	public ArrayList<VacinaEntity> consultarPorFiltro(vacinaSeletor seletor) {
+		return repository.consultarPorFiltro(seletor);
 	}
 
 }

@@ -8,8 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-
-
+import model.vacinaSeletor;
 import model.entity.VacinaEntity;
 
 
@@ -153,6 +152,71 @@ public class VacinaRepository implements BaseRepository<VacinaEntity> {
 		Connection conn = Banco.getConnection();
 		Statement stmt = Banco.getStatement(conn);
 		ResultSet resultado = null;
+
+		try {
+			
+			resultado = stmt.executeQuery(query);
+			PessoaRepository repository = new PessoaRepository();
+			PaisRepository paisRepository = new PaisRepository();
+			while (resultado.next()) {
+				VacinaEntity vacina = new VacinaEntity();
+				vacina.setId(resultado.getInt("id_vacina"));
+				vacina.setNome(resultado.getString("nome"));
+				vacina.setPaisOrigem(paisRepository.consultarPorId(resultado.getInt("id")));
+				vacina.setPesquisador(repository.consultarPorId(resultado.getInt("id_pessoa")));
+				vacina.setEstagio(resultado.getInt("estagio"));
+				vacina.setDataInicioPesquisa(resultado.getDate("dataInicioPesquisa").toLocalDate());
+				vacina.setMedia(resultado.getDouble("media"));
+				vacinas.add(vacina);
+			}
+
+		} catch (SQLException e) {
+			System.out.println("ERRO AO CONSULTAR TODAS AS VACINAS!");
+			System.out.println("ERRO: " + e.getMessage());
+		} finally {
+			Banco.closeResultSet(resultado);
+			Banco.closeStatement(stmt);
+			Banco.closeConnection(conn);
+		}
+		
+		return vacinas;
+		
+	}
+	
+	public ArrayList<VacinaEntity> consultarPorFiltro(vacinaSeletor seletor) {
+		
+		ArrayList<VacinaEntity> vacinas = new ArrayList<VacinaEntity>();
+		Connection conn = Banco.getConnection();
+		Statement stmt = Banco.getStatement(conn);
+		ResultSet resultado = null;
+		boolean primeiro = true;
+		
+		String query = " select v.* from vacina v "
+				 + " inner join paises p on v.id = p.id "
+				 + " inner join pessoa pe on v.id_pessoa = pe.id_pessoa  ";
+		
+		if (seletor.getNomeVacina() != null) {
+			if (primeiro) {
+				query +=  " where ";
+			}else {
+				query += " and ";
+			}
+			
+			query += " upper(v.nome) like upper  ('%" + seletor.getNomeVacina() + "%')";
+			primeiro = false;
+			
+		}
+		
+		if (seletor.getNomePais() != null) {
+			if (primeiro) {
+				query += " where ";
+			}else {
+				query += " and ";
+			}
+			
+			query += " upper(p.nome_pais) like upper('%" + seletor.getNomePais() + "%')";
+			
+		}
 
 		try {
 			
