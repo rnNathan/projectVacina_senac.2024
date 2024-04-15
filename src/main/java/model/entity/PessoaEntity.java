@@ -2,12 +2,14 @@
 package model.entity;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 public class PessoaEntity  {
 	
-	//Classe onde vai ser espeficado os valores do meu objeto.
+	public static final int PESQUISADOR= 1;
+	public static final int VOLUNTARIO= 2;
+	public static final int PUBLICO_GERAL = 3;
+	
 	
 	private int id;
 	private String nome;

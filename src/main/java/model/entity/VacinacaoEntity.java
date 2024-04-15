@@ -12,9 +12,9 @@ public class VacinacaoEntity {
 	private int IdPessoa;
 	private VacinaEntity vacina;
 	private LocalDate dataVacina;
-	private int avaliacao;
+	private double avaliacao;
 	
-	public VacinacaoEntity(int id, int idVacinacao, int idPessoa, VacinaEntity vacina, LocalDate dataVacina, int avaliacao) {
+	public VacinacaoEntity(int id, int idVacinacao, int idPessoa, VacinaEntity vacina, LocalDate dataVacina, double avaliacao) {
 		super();
 		this.idVacinacao = idVacinacao;
 		IdPessoa = idPessoa;
@@ -66,11 +66,11 @@ public class VacinacaoEntity {
 		this.dataVacina = dataVacina;
 	}
 
-	public int getAvaliacao() {
+	public double getAvaliacao() {
 		return avaliacao;
 	}
 
-	public void setAvaliacao(int avaliacao) {
+	public void setAvaliacao(double avaliacao) {
 		this.avaliacao = avaliacao;
 	}
 	

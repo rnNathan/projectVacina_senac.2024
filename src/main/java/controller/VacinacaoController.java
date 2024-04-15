@@ -41,7 +41,7 @@ public class VacinacaoController {
 	@Path("/alterar")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public boolean alterar (VacinacaoEntity entity) {
+	public boolean alterar (VacinacaoEntity entity) throws PessoaException {
 		return service.alterar(entity);
 	}
 	
