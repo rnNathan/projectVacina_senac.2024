@@ -98,6 +98,7 @@ public class PaisRepository implements BaseRepository<PaisEntity> {
 				pais.setIdPais(resultado.getInt("id"));
 				pais.setNomePais(resultado.getString("nome_pais"));
 				pais.setSigla(resultado.getString("sigla"));
+				listaPais.add(pais);
 			}
 			
 		} catch (SQLException e) 

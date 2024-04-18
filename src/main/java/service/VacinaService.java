@@ -3,11 +3,11 @@ package service;
 import java.util.ArrayList;
 
 import exception.PessoaException;
-import model.vacinaSeletor;
 import model.entity.VacinaEntity;
 import model.entity.VacinacaoEntity;
 import model.repository.VacinaRepository;
 import model.repository.VacinacaoRepository;
+import model.seletor.vacinaSeletor;
 
 
 public class VacinaService {

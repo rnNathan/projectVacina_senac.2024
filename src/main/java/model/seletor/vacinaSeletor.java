@@ -1,4 +1,4 @@
-package model;
+package model.seletor;
 
 public class vacinaSeletor {
 	
