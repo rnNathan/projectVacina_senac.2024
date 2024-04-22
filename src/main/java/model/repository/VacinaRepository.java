@@ -195,6 +195,8 @@ public class VacinaRepository implements BaseRepository<VacinaEntity> {
 				 + " inner join paises p on v.id = p.id "
 				 + " inner join pessoa pe on v.id_pessoa = pe.id_pessoa  ";
 		
+		
+		
 		if (seletor.getNomeVacina() != null) {
 			if (primeiro) {
 				query +=  " where ";
@@ -227,6 +229,15 @@ public class VacinaRepository implements BaseRepository<VacinaEntity> {
 			
 			query += " upper (pe.nome) like upper('%" + seletor.getNomePesquisador() +"%')";
 		}
+		
+		if (seletor.getDataInicioPesquisa() != null && seletor.getDataFinalPesquisa() != null) {
+			if (!primeiro) {
+				query += " and ";
+			}
+			
+			query += " v.dataInicioPesquisa BETWEEN '" + seletor.getDataInicioPesquisa() + "' and '" + seletor.getDataFinalPesquisa() + "'";
+			primeiro = false;
+		}
 
 		try {
 			
@@ -240,7 +251,9 @@ public class VacinaRepository implements BaseRepository<VacinaEntity> {
 				vacina.setPaisOrigem(paisRepository.consultarPorId(resultado.getInt("id")));
 				vacina.setPesquisador(repository.consultarPorId(resultado.getInt("id_pessoa")));
 				vacina.setEstagio(resultado.getInt("estagio"));
-				vacina.setDataInicioPesquisa(resultado.getDate("dataInicioPesquisa").toLocalDate());
+				if(resultado.getDate("dataInicioPesquisa") != null) {
+					vacina.setDataInicioPesquisa(resultado.getDate("dataInicioPesquisa").toLocalDate());
+				}
 				vacina.setMedia(resultado.getDouble("media"));
 				vacinas.add(vacina);
 			}
