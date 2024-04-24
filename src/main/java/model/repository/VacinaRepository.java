@@ -191,11 +191,7 @@ public class VacinaRepository implements BaseRepository<VacinaEntity> {
 		ResultSet resultado = null;
 		boolean primeiro = true;
 		
-<<<<<<< HEAD
-		String query = " select v.* from vacinas v "
-=======
 		String query = " select v.* from vacina.vacinas v "
->>>>>>> branch 'master' of https://github.com/rnNathan/vacina-o_senac.2024.git
 				 + " inner join paises p on v.id = p.id "
 				 + " inner join pessoa pe on v.id_pessoa = pe.id_pessoa  ";
 		
