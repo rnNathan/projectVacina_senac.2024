@@ -8,8 +8,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import model.vacinaSeletor;
 import model.entity.VacinaEntity;
+import model.seletor.vacinaSeletor;
 
 
 public class VacinaRepository implements BaseRepository<VacinaEntity> {
@@ -54,7 +54,7 @@ public class VacinaRepository implements BaseRepository<VacinaEntity> {
 
 	@Override
 	public boolean excluir(int id) {
-		String query = "delete from vacinas where id_vacina = " + id;
+		String query = "delete from vacina.vacinas where id_vacina = " + id;
 		Connection conn = Banco.getConnection();
 		Statement stmt = Banco.getStatement(conn);
 		ResultSet resultado = null;
@@ -83,7 +83,7 @@ public class VacinaRepository implements BaseRepository<VacinaEntity> {
 	@Override
 	public boolean alterar(VacinaEntity alterarVacina) {
 		boolean retorno = false;
-		String query = " UPDATE vacinas "
+		String query = " UPDATE vacina.vacinas "
 				+ " SET id_pessoa=?, nome=?, id=?, estagio=?, dataInicioPesquisa=?, media=? "
 				+ " WHERE id_vacina=? ";
 		Connection conn = Banco.getConnection();
@@ -148,7 +148,7 @@ public class VacinaRepository implements BaseRepository<VacinaEntity> {
 	@Override
 	public ArrayList<VacinaEntity> consultarTodos() {
 		ArrayList<VacinaEntity> vacinas = new ArrayList<VacinaEntity>();
-		String query = "select * from vacinas";
+		String query = "select * from vacina.vacinas";
 		Connection conn = Banco.getConnection();
 		Statement stmt = Banco.getStatement(conn);
 		ResultSet resultado = null;
@@ -191,9 +191,15 @@ public class VacinaRepository implements BaseRepository<VacinaEntity> {
 		ResultSet resultado = null;
 		boolean primeiro = true;
 		
+<<<<<<< HEAD
 		String query = " select v.* from vacinas v "
+=======
+		String query = " select v.* from vacina.vacinas v "
+>>>>>>> branch 'master' of https://github.com/rnNathan/vacina-o_senac.2024.git
 				 + " inner join paises p on v.id = p.id "
 				 + " inner join pessoa pe on v.id_pessoa = pe.id_pessoa  ";
+		
+		
 		
 		if (seletor.getNomeVacina() != null) {
 			if (primeiro) {
@@ -217,6 +223,25 @@ public class VacinaRepository implements BaseRepository<VacinaEntity> {
 			query += " upper(p.nome_pais) like upper('%" + seletor.getNomePais() + "%')";
 			
 		}
+		
+		if(seletor.getNomePesquisador() != null) {
+			if (primeiro) {
+				query += " where ";
+			}else {
+				query += " and ";
+			}
+			
+			query += " upper (pe.nome) like upper('%" + seletor.getNomePesquisador() +"%')";
+		}
+		
+		if (seletor.getDataInicioPesquisa() != null && seletor.getDataFinalPesquisa() != null) {
+			if (!primeiro) {
+				query += " and ";
+			}
+			
+			query += " v.dataInicioPesquisa BETWEEN '" + seletor.getDataInicioPesquisa() + "' and '" + seletor.getDataFinalPesquisa() + "'";
+			primeiro = false;
+		}
 
 		try {
 			
@@ -230,7 +255,9 @@ public class VacinaRepository implements BaseRepository<VacinaEntity> {
 				vacina.setPaisOrigem(paisRepository.consultarPorId(resultado.getInt("id")));
 				vacina.setPesquisador(repository.consultarPorId(resultado.getInt("id_pessoa")));
 				vacina.setEstagio(resultado.getInt("estagio"));
-				vacina.setDataInicioPesquisa(resultado.getDate("dataInicioPesquisa").toLocalDate());
+				if(resultado.getDate("dataInicioPesquisa") != null) {
+					vacina.setDataInicioPesquisa(resultado.getDate("dataInicioPesquisa").toLocalDate());
+				}
 				vacina.setMedia(resultado.getDouble("media"));
 				vacinas.add(vacina);
 			}

@@ -1,5 +1,7 @@
 package controller;
 
+import java.util.ArrayList;
+
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
@@ -29,6 +31,16 @@ public class PaisController {
 	@Produces(MediaType.APPLICATION_JSON)
 	public PaisEntity consultarPorId(@PathParam("id")int id) {
 		return paisService.consultarPorId(id);
+	}
+	
+	
+	
+	@GET
+	@Path("/todos")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public ArrayList<PaisEntity> listarTodos() {
+		return paisService.consultarTodos();
 	}
 
 }

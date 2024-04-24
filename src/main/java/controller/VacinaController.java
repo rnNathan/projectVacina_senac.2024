@@ -11,8 +11,8 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
-import model.vacinaSeletor;
 import model.entity.VacinaEntity;
+import model.seletor.vacinaSeletor;
 import service.VacinaService;
 
 @Path("/vacina")

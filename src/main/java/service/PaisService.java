@@ -17,7 +17,7 @@ public class PaisService {
 		return repository.consultarPorId(id);
 	}
 	
-	public ArrayList<PaisEntity> listarTodos (){
+	public ArrayList<PaisEntity> consultarTodos (){
 		return repository.consultarTodos();
 	}
 	
