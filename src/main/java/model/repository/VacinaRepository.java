@@ -191,7 +191,7 @@ public class VacinaRepository implements BaseRepository<VacinaEntity> {
 		ResultSet resultado = null;
 		boolean primeiro = true;
 		
-		String query = " select v.* from vacina v "
+		String query = " select v.* from vacinas v "
 				 + " inner join paises p on v.id = p.id "
 				 + " inner join pessoa pe on v.id_pessoa = pe.id_pessoa  ";
 		
