@@ -9,8 +9,8 @@ public class PaisService {
 	
 	PaisRepository repository = new PaisRepository();
 	
-	public PaisEntity salvar (PaisEntity novoPais) {
-		return repository.salvar(novoPais);
+	public PaisEntity inserir (PaisEntity novoPais) {
+		return repository.inserir(novoPais);
 	}
 	
 	public PaisEntity consultarPorId(int id) {

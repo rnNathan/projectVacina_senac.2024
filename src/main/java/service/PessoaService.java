@@ -15,11 +15,11 @@ public class PessoaService {
 	private PessoaRepository pessoaRepository = new PessoaRepository();
 	
 
-	public PessoaEntity salvar(PessoaEntity entity) throws PessoaException {
+	public PessoaEntity inserir(PessoaEntity entity) throws PessoaException {
 
 		validarCamposObrigatorios(entity);
 		pessoaRepository.verificarCPF(entity);
-		return pessoaRepository.salvar(entity);
+		return pessoaRepository.inserir(entity);
 
 	}
 

@@ -25,8 +25,8 @@ public class VacinacaoController {
 	@Path("/salvar")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public VacinacaoEntity salvar (VacinacaoEntity novaVacinacao) throws PessoaException {
-		return service.salvar(novaVacinacao);
+	public VacinacaoEntity inserir (VacinacaoEntity novaVacinacao) throws PessoaException {
+		return service.inserir(novaVacinacao);
 	}
 	
 	

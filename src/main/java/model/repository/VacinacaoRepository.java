@@ -14,7 +14,7 @@ import model.entity.VacinacaoEntity;
 public class VacinacaoRepository implements BaseRepository<VacinacaoEntity> {
 
 	@Override
-	public VacinacaoEntity salvar(VacinacaoEntity novaVacinacao) {
+	public VacinacaoEntity inserir(VacinacaoEntity novaVacinacao) {
 		String query = "INSERT INTO vacina.aplicacao_vacina (id_pessoa, id_vacina, data_aplicacao, avaliacao) values (?, ?, ?, ?)";
 		Connection conn = Banco.getConnection();
 		PreparedStatement pstmt = Banco.getPreparedStatementWithPk(conn, query);

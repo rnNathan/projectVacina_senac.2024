@@ -12,7 +12,7 @@ import model.entity.PaisEntity;
 public class PaisRepository implements BaseRepository<PaisEntity> {
 
 	@Override
-	public PaisEntity salvar(PaisEntity novoPais) {
+	public PaisEntity inserir(PaisEntity novoPais) {
 		String query = "INSERT INTO vacina.paises "
 				+ "(nome_pais, sigla) "
 				+ "VALUES(?, ?);";

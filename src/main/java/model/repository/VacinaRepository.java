@@ -17,7 +17,7 @@ public class VacinaRepository implements BaseRepository<VacinaEntity> {
 
 
 	@Override
-	public VacinaEntity salvar(VacinaEntity novaVacina) {
+	public VacinaEntity inserir(VacinaEntity novaVacina) {
 
 		String query = "INSERT INTO vacina.vacinas (nome, id, id_pessoa, estagio, dataInicioPesquisa, media) values (?, ?, ?, ?, ?, ?)"; 
 		Connection conn = Banco.getConnection();

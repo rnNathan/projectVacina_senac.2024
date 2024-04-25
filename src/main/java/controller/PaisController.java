@@ -22,8 +22,8 @@ public class PaisController {
 	@Path("/salvar")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public PaisEntity salvar (PaisEntity novoPais) {
-		return paisService.salvar(novoPais);
+	public PaisEntity inserir (PaisEntity novoPais) {
+		return paisService.inserir(novoPais);
 		}
 	
 	@GET

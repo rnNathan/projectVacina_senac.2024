@@ -2,6 +2,8 @@ package model.repository;
 
 import java.util.ArrayList;
 
+import model.entity.VacinaEntity;
+
 
 //BaseRepository com o tipo <T> é usado como interface e outras 
 //classe herdarem todos os metodos dessa class
@@ -10,7 +12,7 @@ public interface BaseRepository <T> {
 	
 	
 	//salvar no banco.
-	public T salvar(T novoObjeto);
+	public T inserir(T novoObjeto);
 	
 	//excluir uma entidade do banco;
 	public boolean excluir(int id);
@@ -23,6 +25,8 @@ public interface BaseRepository <T> {
 	
 	//listar todas entidades do banco de dados.
 	public ArrayList<T> consultarTodos();
+
+	
 
 
 }

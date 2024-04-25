@@ -17,8 +17,8 @@ public class VacinaService {
 	
 	VacinacaoEntity entityVacinacao = new VacinacaoEntity();
 
-	public VacinaEntity salvar(VacinaEntity entity) {
-		return repository.salvar(entity);
+	public VacinaEntity inserir(VacinaEntity entity) {
+		return repository.inserir(entity);
 	}
 
 	public boolean excluir (int id) throws PessoaException {

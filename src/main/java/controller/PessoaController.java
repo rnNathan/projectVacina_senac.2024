@@ -26,8 +26,8 @@ public class PessoaController {
 	@Path("/salvar")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public PessoaEntity salvar(PessoaEntity novaPessoa)  throws PessoaException{
-		return this.pessoaService.salvar(novaPessoa);
+	public PessoaEntity inserir(PessoaEntity novaPessoa)  throws PessoaException{
+		return this.pessoaService.inserir(novaPessoa);
 	}
 	
 	

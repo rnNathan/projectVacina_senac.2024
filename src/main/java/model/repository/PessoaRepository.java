@@ -43,7 +43,7 @@ public class PessoaRepository implements BaseRepository<PessoaEntity> {
 	
 	
 	@Override
-	public PessoaEntity salvar(PessoaEntity novaEntidade) {
+	public PessoaEntity inserir(PessoaEntity novaEntidade) {
 		String query = "INSERT INTO vacina.pessoa (nome, dataNascimento, sexo, cpf, tipoPessoaCadastrada, id)"
 				+ " VALUES (?, ?, ?, ?, ?, ?)";
 		Connection conn = Banco.getConnection();

@@ -21,12 +21,12 @@ public class VacinaController {
 	VacinaService service = new VacinaService();
 	
 	
-	@Path("/salvar")
+	@Path("/inserir")
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public VacinaEntity salvar(VacinaEntity vacina) throws PessoaException {
-		return service.salvar(vacina);
+	public VacinaEntity inserir(VacinaEntity vacina) throws PessoaException {
+		return service.inserir(vacina);
 	}
 	
 	@Path("/excluir/{id}")
@@ -36,7 +36,7 @@ public class VacinaController {
 		return service.excluir(id);
 	}
 	
-	@Path("/altera")
+	@Path("/alterar")
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.TEXT_PLAIN)

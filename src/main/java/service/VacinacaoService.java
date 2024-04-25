@@ -17,11 +17,11 @@ public class VacinacaoService {
 	private VacinacaoRepository repository = new VacinacaoRepository();
 	private static final int NOTA_MAXIMA = 5;
 
-	public VacinacaoEntity salvar(VacinacaoEntity novaVacinacao) throws PessoaException {
+	public VacinacaoEntity inserir(VacinacaoEntity novaVacinacao) throws PessoaException {
 		validarDadosVacinação(novaVacinacao);
 		atualizaMediaVacina(novaVacinacao);
 		validarPessoaParaReceberVacina(novaVacinacao);
-		return repository.salvar(novaVacinacao);
+		return repository.inserir(novaVacinacao);
 	}
 
 	public boolean excluir(int id) {
