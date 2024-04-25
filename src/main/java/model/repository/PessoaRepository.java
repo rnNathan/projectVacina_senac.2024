@@ -213,6 +213,48 @@ public class PessoaRepository implements BaseRepository<PessoaEntity> {
 	}
 	
 	
+	public ArrayList<PessoaEntity> listarPorPerquisador() {
+			ArrayList<PessoaEntity> listaPessoa = new ArrayList<PessoaEntity>();
+			
+			Connection conn = Banco.getConnection();
+			Statement stmt = Banco.getStatement(conn);
+			ResultSet resultado = null;
+			String query = "SELECT * FROM vacina.pessoa WHERE tipoPessoaCadastrada = '" + 1 + "'";
+			try {
+				resultado = stmt.executeQuery(query);
+				while (resultado.next()) {
+					PessoaEntity pessoaEntity = new PessoaEntity();
+					pessoaEntity.setId(resultado.getInt("id_pessoa"));
+					pessoaEntity.setNome(resultado.getString("nome"));
+					pessoaEntity.setDataNascimento(resultado.getDate("dataNascimento").toLocalDate());
+					pessoaEntity.setSexo(resultado.getString("sexo"));
+					pessoaEntity.setCpf(resultado.getString("cpf"));
+					pessoaEntity.setTipoPessoaCadastrada(resultado.getInt("tipoPessoaCadastrada"));
+					PaisRepository paisRepository = new PaisRepository();
+					pessoaEntity.setPaisOrigem(paisRepository.consultarPorId(resultado.getInt("id")));
+					//VacinacaoRepository repository =  new VacinacaoRepository();
+					//pessoaEntity.setTodasVacinas(repository.consultarTodasVacinasPorPessoa(pessoaEntity.getId()));
+					listaPessoa.add(pessoaEntity);
+				}
+				
+			} catch (SQLException e) {
+				
+				System.out.println("Erro ao consultar todas os pesquisadores.");
+				System.out.println("ERRO: " + e.getMessage());
+			}finally {
+				
+				Banco.closeResultSet(resultado);
+				Banco.closeStatement(stmt);
+				Banco.closeConnection(conn);
+			}
+			
+		
+		return listaPessoa;
+	}
+	
+	
+	
+	
 	
 	
 }

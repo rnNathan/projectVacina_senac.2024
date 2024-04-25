@@ -62,5 +62,14 @@ public class PessoaController {
 		return this.pessoaService.listarTodos();
 		
 	}
-
+	
+	@GET 
+	@Path("/pesquisadores")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public ArrayList<PessoaEntity> listarPorPesquisador() {
+		return this.pessoaService.listarPorPesquisador();
+		
+	}
+	
 }

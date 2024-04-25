@@ -42,5 +42,5 @@ public class PaisController {
 	public ArrayList<PaisEntity> listarTodos() {
 		return paisService.consultarTodos();
 	}
-
+	
 }
