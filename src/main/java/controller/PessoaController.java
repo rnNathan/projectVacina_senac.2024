@@ -23,7 +23,7 @@ public class PessoaController {
 	private PessoaService pessoaService = new PessoaService();
 	
 	@POST
-	@Path("/salvar")
+	@Path("/inserir")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public PessoaEntity inserir(PessoaEntity novaPessoa)  throws PessoaException{

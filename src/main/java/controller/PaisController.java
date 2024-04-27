@@ -19,7 +19,7 @@ public class PaisController {
 	
 	
 	@POST
-	@Path("/salvar")
+	@Path("/inserir")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public PaisEntity inserir (PaisEntity novoPais) {

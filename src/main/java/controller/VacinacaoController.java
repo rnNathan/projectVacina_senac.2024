@@ -22,13 +22,12 @@ public class VacinacaoController {
 	private VacinacaoService service = new VacinacaoService();
 	
 	@POST
-	@Path("/salvar")
+	@Path("/inserir")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public VacinacaoEntity inserir (VacinacaoEntity novaVacinacao) throws PessoaException {
 		return service.inserir(novaVacinacao);
 	}
-	
 	
 	@DELETE
 	@Path("/excluir/{id}")
@@ -66,6 +65,8 @@ public class VacinacaoController {
 		return service.consultarTodasPessoaPorId(id);
 	}
 	
+	
+
 	
 
 }
