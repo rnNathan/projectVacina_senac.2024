@@ -231,11 +231,26 @@ public class VacinaRepository implements BaseRepository<VacinaEntity> {
 		}
 		
 		if (seletor.getDataInicioPesquisa() != null && seletor.getDataFinalPesquisa() != null) {
-			if (!primeiro) {
+			if (primeiro) {
 				query += " and ";
+			} else {
+				query += " where ";
 			}
 			
 			query += " v.dataInicioPesquisa BETWEEN '" + seletor.getDataInicioPesquisa() + "' and '" + seletor.getDataFinalPesquisa() + "'";
+			primeiro = false;
+		} else if (seletor.getDataInicioPesquisa() != null) {
+			if(primeiro) {
+				query += " and ";
+			}
+			query += "v.dataInicioPesquisa >= '" + seletor.getDataInicioPesquisa() + "'";
+			primeiro = false;
+		
+		}else if (seletor.getDataFinalPesquisa() != null ) {
+			if (primeiro) {
+				query = " and ";
+			}
+			query += "v.dataInicioPesquisa <= '" + seletor.getDataFinalPesquisa() + "'";
 			primeiro = false;
 		}
 
