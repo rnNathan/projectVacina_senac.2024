@@ -196,6 +196,10 @@ public class VacinaRepository implements BaseRepository<VacinaEntity> {
 				 + " inner join pessoa pe on v.id_pessoa = pe.id_pessoa  ";
 		
 		
+		if (seletor.temPaginacao()) {
+			query += " limit " + seletor.getLimite() + " offset " + seletor.getOffset();
+		}
+		
 		
 		if (seletor.getNomeVacina() != null) {
 			if (primeiro) {

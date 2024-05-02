@@ -9,6 +9,7 @@ import model.entity.VacinacaoEntity;
 import model.repository.PessoaRepository;
 
 import model.repository.VacinacaoRepository;
+import model.seletor.PessoaSeletor;
 
 public class PessoaService {
 
@@ -76,5 +77,9 @@ public class PessoaService {
 
 	public ArrayList<PessoaEntity> listarPorPesquisador() {
 		return pessoaRepository.listarPorPerquisador() ;
+	}
+
+	public ArrayList<PessoaEntity> consultarComSeletor(PessoaSeletor seletor) {
+		return pessoaRepository.consultarPorFiltro(seletor);
 	}
 }

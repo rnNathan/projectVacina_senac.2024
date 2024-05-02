@@ -1,8 +1,9 @@
 package model.seletor;
 
 import java.time.LocalDate;
+import model.seletor.BaseSeletor;
 
-public class vacinaSeletor {
+public class vacinaSeletor extends BaseSeletor{
 	
 	private String nomePais;
 	private String nomeVacina;
