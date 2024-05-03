@@ -79,7 +79,7 @@ public class PessoaService {
 		return pessoaRepository.listarPorPerquisador() ;
 	}
 
-	public ArrayList<PessoaEntity> consultarComSeletor(PessoaSeletor seletor) {
+	public ArrayList<PessoaEntity>consultarComSeletor(PessoaSeletor seletor) {
 		return pessoaRepository.consultarPorFiltro(seletor);
 	}
 }

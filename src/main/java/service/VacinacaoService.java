@@ -115,5 +115,9 @@ public class VacinacaoService {
 		
 		
 	}
+	
+	public ArrayList<VacinacaoEntity> consultarTodasVacinaPorId(int id){
+		return repository.consultarTodasVacinasPorId(id);
+	}
 
 }

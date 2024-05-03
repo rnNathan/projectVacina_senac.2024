@@ -66,6 +66,17 @@ public class VacinacaoController {
 	}
 	
 	
+	
+	@GET
+	@Path("/vacinas/{idVacina}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<VacinacaoEntity> consultarTodasVacinasPorId(@PathParam("idVacina")int id){
+		return service.consultarTodasVacinaPorId(id);
+	}
+	
+	
+	
+	
 
 	
 

@@ -77,9 +77,8 @@ public class PessoaController {
 	@Path("/filtro")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public ArrayList<PessoaEntity> filtro(PessoaSeletor seletor) {
-		return pessoaService.consultarComSeletor(seletor);
-		}
+	public ArrayList <PessoaEntity> consultarComSeletor (PessoaSeletor seletor) {
+		return this.pessoaService.consultarComSeletor(seletor);
 		
-	
+	}
 }
