@@ -18,7 +18,7 @@ public class VacinacaoService {
 	private static final int NOTA_MAXIMA = 5;
 
 	public VacinacaoEntity inserir(VacinacaoEntity novaVacinacao) throws PessoaException {
-		validarDadosVacinação(novaVacinacao);
+		validarDadosVacinacao(novaVacinacao);
 		atualizaMediaVacina(novaVacinacao);
 		validarPessoaParaReceberVacina(novaVacinacao);
 		return repository.inserir(novaVacinacao);
@@ -30,7 +30,7 @@ public class VacinacaoService {
 
 	public boolean alterar(VacinacaoEntity alterarVacinacao) throws PessoaException {
 		
-		validarDadosVacinação(alterarVacinacao);
+		validarDadosVacinacao(alterarVacinacao);
 		atualizaMediaVacina(alterarVacinacao);
 		validarPessoaParaReceberVacina(alterarVacinacao);
 		
@@ -77,7 +77,7 @@ public class VacinacaoService {
 	}
 	
 
-	private void validarDadosVacinação(VacinacaoEntity novaVacinacao) throws PessoaException {
+	private void validarDadosVacinacao(VacinacaoEntity novaVacinacao) throws PessoaException {
 		if (novaVacinacao.getIdPessoa() == 0 || novaVacinacao.getVacina() == null
 				|| novaVacinacao.getVacina().getId() == 0) {
 			throw new PessoaException("INFORME O ID DA PESSOA E A VACINA DA APLICAÇÃO");

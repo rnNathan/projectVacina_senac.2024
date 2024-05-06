@@ -12,7 +12,7 @@ import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import model.entity.VacinaEntity;
-import model.seletor.vacinaSeletor;
+import model.seletor.VacinaSeletor;
 import service.VacinaService;
 
 @Path("/vacina")
@@ -62,8 +62,26 @@ public class VacinaController {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public ArrayList<VacinaEntity> consultarPorFiltro(vacinaSeletor seletor){
+	public ArrayList<VacinaEntity> consultarPorFiltro(VacinaSeletor seletor){
 		return service.consultarPorFiltro(seletor);
 	}
+	
+	@Path("/contar-pagina")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public int contarPaginas(VacinaSeletor seletor) {
+		return this.service.contarPaginas(seletor);
+	}
+	
+	@Path("/contar")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public int contarTotalDeRegistro(VacinaSeletor seletor) {
+		return this.service.contarTodosRegistro(seletor);
+	}
+	
+	
 
 }

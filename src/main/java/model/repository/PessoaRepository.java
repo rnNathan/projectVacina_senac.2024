@@ -13,7 +13,7 @@ import exception.PessoaException;
 import model.entity.PessoaEntity;
 import model.entity.VacinaEntity;
 import model.seletor.PessoaSeletor;
-import model.seletor.vacinaSeletor;
+import model.seletor.VacinaSeletor;
 
 public class PessoaRepository implements BaseRepository<PessoaEntity> {
 

@@ -7,9 +7,8 @@ import java.time.LocalDate;
  */
 public class VacinacaoEntity {
 	
-
 	private int idVacinacao;
-	private int IdPessoa;
+	private int idPessoa;
 	private VacinaEntity vacina;
 	private LocalDate dataVacina;
 	private double avaliacao;
@@ -17,29 +16,22 @@ public class VacinacaoEntity {
 	public VacinacaoEntity(int id, int idVacinacao, int idPessoa, VacinaEntity vacina, LocalDate dataVacina, double avaliacao) {
 		super();
 		this.idVacinacao = idVacinacao;
-		IdPessoa = idPessoa;
+		this.idPessoa = idPessoa;
 		this.vacina = vacina;
 		this.dataVacina = dataVacina;
 		this.avaliacao = avaliacao;
-		
-		
-		
 	}
 	
 	public VacinacaoEntity() {	
 		super();
 	}
 	
-	
-
-
-
 	public int getIdPessoa() {
-		return IdPessoa;
+		return idPessoa;
 	}
 
 	public void setIdPessoa(int idPessoa) {
-		IdPessoa = idPessoa;
+		this.idPessoa = idPessoa;
 	}
 
 	public int getIdVacinacao() {
@@ -73,11 +65,5 @@ public class VacinacaoEntity {
 	public void setAvaliacao(double avaliacao) {
 		this.avaliacao = avaliacao;
 	}
-	
-	
-	
-	
-	
-	
 
 }

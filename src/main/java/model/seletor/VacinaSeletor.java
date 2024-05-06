@@ -1,9 +1,8 @@
 package model.seletor;
 
 import java.time.LocalDate;
-import model.seletor.BaseSeletor;
 
-public class vacinaSeletor extends BaseSeletor{
+public class VacinaSeletor extends BaseSeletor{
 	
 	private String nomePais;
 	private String nomeVacina;
@@ -12,7 +11,7 @@ public class vacinaSeletor extends BaseSeletor{
 	private LocalDate dataFinalPesquisa; 
 
 	
-	public vacinaSeletor(String nomePais, String nomeVacina, String nomePesquisador, LocalDate dataInicioPesquisa, LocalDate dataFinalPesquisa) {
+	public VacinaSeletor(String nomePais, String nomeVacina, String nomePesquisador, LocalDate dataInicioPesquisa, LocalDate dataFinalPesquisa) {
 		super();
 		this.nomePais = nomePais;
 		this.nomeVacina = nomeVacina;
@@ -21,7 +20,7 @@ public class vacinaSeletor extends BaseSeletor{
 		this.dataFinalPesquisa = dataFinalPesquisa;
 	}
 
-	public vacinaSeletor() {
+	public VacinaSeletor() {
 		super();
 		// TODO Auto-generated constructor stub
 	}

@@ -9,22 +9,19 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import model.entity.VacinaEntity;
-import model.seletor.vacinaSeletor;
-
+import model.seletor.VacinaSeletor;
 
 public class VacinaRepository implements BaseRepository<VacinaEntity> {
-	
-
 
 	@Override
 	public VacinaEntity inserir(VacinaEntity novaVacina) {
 
-		String query = "INSERT INTO vacina.vacinas (nome, id, id_pessoa, estagio, dataInicioPesquisa, media) values (?, ?, ?, ?, ?, ?)"; 
+		String query = "INSERT INTO vacina.vacinas (nome, id, id_pessoa, estagio, dataInicioPesquisa, media) values (?, ?, ?, ?, ?, ?)";
 		Connection conn = Banco.getConnection();
 		PreparedStatement pstmt = Banco.getPreparedStatementWithPk(conn, query);
-		
+
 		try {
-			
+
 			pstmt.setString(1, novaVacina.getNome());
 			pstmt.setInt(2, novaVacina.getPaisOrigem().getIdPais());
 			pstmt.setInt(3, novaVacina.getPesquisador().getId());
@@ -32,7 +29,7 @@ public class VacinaRepository implements BaseRepository<VacinaEntity> {
 			pstmt.setDate(5, Date.valueOf(novaVacina.getDataInicioPesquisa()));
 			pstmt.setDouble(6, novaVacina.getMedia());
 			pstmt.execute();
-			
+
 			ResultSet resultado = pstmt.getGeneratedKeys();
 			if (resultado.next()) {
 				novaVacina.setId(resultado.getInt(1));
@@ -61,7 +58,7 @@ public class VacinaRepository implements BaseRepository<VacinaEntity> {
 		boolean retorno = false;
 
 		try {
-			
+
 			if (stmt.executeUpdate(query) == 1) {
 				retorno = true;
 
@@ -84,8 +81,7 @@ public class VacinaRepository implements BaseRepository<VacinaEntity> {
 	public boolean alterar(VacinaEntity alterarVacina) {
 		boolean retorno = false;
 		String query = " UPDATE vacina.vacinas "
-				+ " SET id_pessoa=?, nome=?, id=?, estagio=?, dataInicioPesquisa=?, media=? "
-				+ " WHERE id_vacina=? ";
+				+ " SET id_pessoa=?, nome=?, id=?, estagio=?, dataInicioPesquisa=?, media=? " + " WHERE id_vacina=? ";
 		Connection conn = Banco.getConnection();
 		PreparedStatement pstmt = Banco.getPreparedStatementWithPk(conn, query);
 		try {
@@ -117,7 +113,7 @@ public class VacinaRepository implements BaseRepository<VacinaEntity> {
 		VacinaEntity vacina = null;
 		ResultSet resultado = null;
 		try {
-			
+
 			resultado = stmt.executeQuery(query);
 			PessoaRepository pessoaRepository = new PessoaRepository();
 			PaisRepository paisRepository = new PaisRepository();
@@ -130,7 +126,7 @@ public class VacinaRepository implements BaseRepository<VacinaEntity> {
 				vacina.setEstagio(resultado.getInt("estagio"));
 				vacina.setDataInicioPesquisa(resultado.getDate("dataInicioPesquisa").toLocalDate());
 				vacina.setMedia(resultado.getDouble("media"));
-				
+
 			}
 
 		} catch (SQLException e) {
@@ -154,7 +150,7 @@ public class VacinaRepository implements BaseRepository<VacinaEntity> {
 		ResultSet resultado = null;
 
 		try {
-			
+
 			resultado = stmt.executeQuery(query);
 			PessoaRepository repository = new PessoaRepository();
 			PaisRepository paisRepository = new PaisRepository();
@@ -178,88 +174,28 @@ public class VacinaRepository implements BaseRepository<VacinaEntity> {
 			Banco.closeStatement(stmt);
 			Banco.closeConnection(conn);
 		}
-		
+
 		return vacinas;
-		
+
 	}
-	
-	public ArrayList<VacinaEntity> consultarPorFiltro(vacinaSeletor seletor) {
-		
+
+	public ArrayList<VacinaEntity> consultarPorFiltro(VacinaSeletor seletor) {
+
 		ArrayList<VacinaEntity> vacinas = new ArrayList<VacinaEntity>();
 		Connection conn = Banco.getConnection();
 		Statement stmt = Banco.getStatement(conn);
 		ResultSet resultado = null;
-		boolean primeiro = true;
-		
-		String query = " select v.* from vacina.vacinas v "
-				 + " inner join paises p on v.id = p.id "
-				 + " inner join pessoa pe on v.id_pessoa = pe.id_pessoa  ";
-		
-		
+
+		String query = " select v.* from vacina.vacinas v " + " inner join paises p on v.id = p.id "
+				+ " inner join pessoa pe on v.id_pessoa = pe.id_pessoa  ";
+
+		query = incluirFiltros(seletor, query);
+
 		if (seletor.temPaginacao()) {
 			query += " limit " + seletor.getLimite() + " offset " + seletor.getOffset();
 		}
-		
-		
-		if (seletor.getNomeVacina() != null) {
-			if (primeiro) {
-				query +=  " where ";
-			}else {
-				query += " and ";
-			}
-			
-			query += " upper(v.nome) like upper  ('%" + seletor.getNomeVacina() + "%')";
-			primeiro = false;
-			
-		}
-		
-		if (seletor.getNomePais() != null) {
-			if (primeiro) {
-				query += " where ";
-			}else {
-				query += " and ";
-			}
-			
-			query += " upper(p.nome_pais) like upper('%" + seletor.getNomePais() + "%')";
-			
-		}
-		
-		if(seletor.getNomePesquisador() != null) {
-			if (primeiro) {
-				query += " where ";
-			}else {
-				query += " and ";
-			}
-			
-			query += " upper (pe.nome) like upper('%" + seletor.getNomePesquisador() +"%')";
-		}
-		
-		if (seletor.getDataInicioPesquisa() != null && seletor.getDataFinalPesquisa() != null) {
-			if (primeiro) {
-				query += " and ";
-			} else {
-				query += " where ";
-			}
-			
-			query += " v.dataInicioPesquisa BETWEEN '" + seletor.getDataInicioPesquisa() + "' and '" + seletor.getDataFinalPesquisa() + "'";
-			primeiro = false;
-		} else if (seletor.getDataInicioPesquisa() != null) {
-			if(primeiro) {
-				query += " and ";
-			}
-			query += "v.dataInicioPesquisa >= '" + seletor.getDataInicioPesquisa() + "'";
-			primeiro = false;
-		
-		}else if (seletor.getDataFinalPesquisa() != null ) {
-			if (primeiro) {
-				query = " and ";
-			}
-			query += "v.dataInicioPesquisa <= '" + seletor.getDataFinalPesquisa() + "'";
-			primeiro = false;
-		}
 
 		try {
-			
 			resultado = stmt.executeQuery(query);
 			PessoaRepository repository = new PessoaRepository();
 			PaisRepository paisRepository = new PaisRepository();
@@ -270,7 +206,7 @@ public class VacinaRepository implements BaseRepository<VacinaEntity> {
 				vacina.setPaisOrigem(paisRepository.consultarPorId(resultado.getInt("id")));
 				vacina.setPesquisador(repository.consultarPorId(resultado.getInt("id_pessoa")));
 				vacina.setEstagio(resultado.getInt("estagio"));
-				if(resultado.getDate("dataInicioPesquisa") != null) {
+				if (resultado.getDate("dataInicioPesquisa") != null) {
 					vacina.setDataInicioPesquisa(resultado.getDate("dataInicioPesquisa").toLocalDate());
 				}
 				vacina.setMedia(resultado.getDouble("media"));
@@ -285,11 +221,124 @@ public class VacinaRepository implements BaseRepository<VacinaEntity> {
 			Banco.closeStatement(stmt);
 			Banco.closeConnection(conn);
 		}
-		
+
 		return vacinas;
-		
 	}
-	
-	
-	
+
+	private String incluirFiltros(VacinaSeletor seletor, String query) {
+		boolean primeiro = true;
+
+		if (seletor.getNomeVacina() != null) {
+			if (primeiro) {
+				query += " where ";
+			} else {
+				query += " and ";
+			}
+
+			query += " upper(v.nome) like upper  ('%" + seletor.getNomeVacina() + "%')";
+			primeiro = false;
+
+		}
+
+		if (seletor.getNomePais() != null) {
+			if (primeiro) {
+				query += " where ";
+			} else {
+				query += " and ";
+			}
+
+			query += " upper(p.nome_pais) like upper('%" + seletor.getNomePais() + "%')";
+
+		}
+
+		if (seletor.getNomePesquisador() != null) {
+			if (primeiro) {
+				query += " where ";
+			} else {
+				query += " and ";
+			}
+
+			query += " upper (pe.nome) like upper('%" + seletor.getNomePesquisador() + "%')";
+		}
+
+		if (seletor.getDataInicioPesquisa() != null && seletor.getDataFinalPesquisa() != null) {
+			if (primeiro) {
+				query += " and ";
+			} else {
+				query += " where ";
+			}
+
+			query += " v.dataInicioPesquisa BETWEEN '" + seletor.getDataInicioPesquisa() + "' and '"
+					+ seletor.getDataFinalPesquisa() + "'";
+			primeiro = false;
+		} else if (seletor.getDataInicioPesquisa() != null) {
+			if (primeiro) {
+				query += " and ";
+			}
+			query += "v.dataInicioPesquisa >= '" + seletor.getDataInicioPesquisa() + "'";
+			primeiro = false;
+
+		} else if (seletor.getDataFinalPesquisa() != null) {
+			if (primeiro) {
+				query = " and ";
+			}
+			query += "v.dataInicioPesquisa <= '" + seletor.getDataFinalPesquisa() + "'";
+			primeiro = false;
+		}
+
+		return query;
+	}
+
+	public int contarTotalDeRegistro(VacinaSeletor seletor) {
+
+		ArrayList<VacinaEntity> vacinas = new ArrayList<VacinaEntity>();
+		Connection conn = Banco.getConnection();
+		Statement stmt = Banco.getStatement(conn);
+		ResultSet resultado = null;
+		int totalDeRegistro = 0;
+
+		String query = " select COUNT(v.*) from vacina.vacinas v " + " inner join paises p on v.id = p.id "
+				+ " inner join pessoa pe on v.id_pessoa = pe.id_pessoa  ";
+
+		query = incluirFiltros(seletor, query);
+
+		if (seletor.temPaginacao()) {
+			query += " limit " + seletor.getLimite() + " offset " + seletor.getOffset();
+		}
+
+		try {
+			resultado = stmt.executeQuery(query);
+			if (resultado.next()) {
+				totalDeRegistro = resultado.getInt(1);
+
+			}
+
+		} catch (SQLException e) {
+			System.out.println("ERRO AO CONSULTAR TOTAL DE VACINAS!");
+			System.out.println("ERRO: " + e.getMessage());
+		} finally {
+			Banco.closeResultSet(resultado);
+			Banco.closeStatement(stmt);
+			Banco.closeConnection(conn);
+		}
+
+		return totalDeRegistro;
+
+	}
+
+	public int contarPaginas(VacinaSeletor seletor) {
+		int totalPaginas = 0;
+		int totalRegistro = this.contarTotalDeRegistro(seletor);
+
+		totalPaginas = totalRegistro / seletor.getLimite();
+		int resto = totalRegistro % seletor.getLimite();
+
+		if (resto > 0) {
+			totalPaginas++;
+		}
+
+		return totalPaginas;
+
+	}
+
 }

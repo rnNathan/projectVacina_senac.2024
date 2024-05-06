@@ -26,7 +26,4 @@ public interface BaseRepository <T> {
 	//listar todas entidades do banco de dados.
 	public ArrayList<T> consultarTodos();
 
-	
-
-
 }

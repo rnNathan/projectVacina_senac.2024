@@ -7,7 +7,7 @@ import model.entity.VacinaEntity;
 import model.entity.VacinacaoEntity;
 import model.repository.VacinaRepository;
 import model.repository.VacinacaoRepository;
-import model.seletor.vacinaSeletor;
+import model.seletor.VacinaSeletor;
 
 
 public class VacinaService {
@@ -46,8 +46,16 @@ public class VacinaService {
 		return repository.consultarTodos();
 	}
 	
-	public ArrayList<VacinaEntity> consultarPorFiltro(vacinaSeletor seletor) {
+	public ArrayList<VacinaEntity> consultarPorFiltro(VacinaSeletor seletor) {
 		return repository.consultarPorFiltro(seletor);
+	}
+	
+	public int contarTodosRegistro(VacinaSeletor seletor) {
+		return this.repository.contarTotalDeRegistro(seletor);
+	}
+	
+	public int contarPaginas(VacinaSeletor seletor) {
+		return this.repository.contarPaginas(seletor);
 	}
 
 }
