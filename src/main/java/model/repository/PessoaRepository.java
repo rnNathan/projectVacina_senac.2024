@@ -111,7 +111,7 @@ public class PessoaRepository implements BaseRepository<PessoaEntity> {
 
 		boolean alterou = false;
 		String query = " UPDATE vacina.pessoa "
-				+ " SET nome=?, cpf=?, sexo=?, dataNascimento=?, tipoPessoaCadastrada=?, id=? " + " WHERE id_pessoa=? ";
+				+ " SET nome=?, dataNascimento=?, sexo=?,  cpf=?, tipoPessoaCadastrada=?, id=? " + " WHERE id_pessoa=? ";
 		Connection conn = Banco.getConnection();
 		PreparedStatement stmt = Banco.getPreparedStatementWithPk(conn, query);
 		try {
@@ -253,9 +253,11 @@ public class PessoaRepository implements BaseRepository<PessoaEntity> {
 		boolean primeiro = true;
 
 		String query = " select pe.* from vacina.pessoa pe " + " inner join paises p on pe.id = p.id ";
-
+		
+		
 		if (seletor.getNomePessoa() != null) {
 			if (primeiro) {
+				
 				query += " where ";
 			} else {
 				query += " and ";
@@ -281,12 +283,22 @@ public class PessoaRepository implements BaseRepository<PessoaEntity> {
 			if (primeiro) {
 				query += " and ";
 			}
-			query += "pe.dataNascimento = " + seletor.getDataNascimento();
+			query += "pe.dataNascimento = '" + seletor.getDataNascimento() + "'";
 			primeiro = false;
 		}
+		
+		if (seletor.getCpf() != null) {
+			if(primeiro) {
+				query += " and ";	
+			}
+			
+			query += "pe.cpf =  '" + seletor.getCpf()  + "'"; 
+		}
+		
+		
 			try {
 				resultado = stmt.executeQuery(query);
-				while (resultado.next()) {
+				if (resultado.next()) {
 					PessoaEntity pessoaEntity = new PessoaEntity();
 					pessoaEntity.setId(resultado.getInt("id_pessoa"));
 					pessoaEntity.setNome(resultado.getString("nome"));

@@ -5,8 +5,8 @@ import java.time.LocalDate;
 public class VacinaEntity {
 	
 	public static final int ESTAGIO_INICIAL= 1;
-	public static final int ESTAGIO_TESTE= 1;
-	public static final int ESTAGIO_APLICACAO_EM_MASSA = 1;
+	public static final int ESTAGIO_TESTE= 2;
+	public static final int ESTAGIO_APLICACAO_EM_MASSA = 3;
 	
 	private int id;
 	private String nome;

@@ -187,12 +187,13 @@ public class VacinaRepository implements BaseRepository<VacinaEntity> {
 		ResultSet resultado = null;
 
 		String query = " select v.* from vacina.vacinas v " + " inner join paises p on v.id = p.id "
-				+ " inner join pessoa pe on v.id_pessoa = pe.id_pessoa  ";
+				+ " inner join pessoa pe on v.id_pessoa = pe.id_pessoa ";
 
 		query = incluirFiltros(seletor, query);
 
 		if (seletor.temPaginacao()) {
-			query += " limit " + seletor.getLimite() + " offset " + seletor.getOffset();
+			query += " limit " + seletor.getLimite();
+			query += " offset " + seletor.getOffset();
 		}
 
 		try {
@@ -214,7 +215,7 @@ public class VacinaRepository implements BaseRepository<VacinaEntity> {
 			}
 
 		} catch (SQLException e) {
-			System.out.println("ERRO AO CONSULTAR TODAS AS VACINAS!");
+			System.out.println("ERRO AO CONSULTAR POR FILTRO AS VACINAS!");
 			System.out.println("ERRO: " + e.getMessage());
 		} finally {
 			Banco.closeResultSet(resultado);
@@ -297,14 +298,10 @@ public class VacinaRepository implements BaseRepository<VacinaEntity> {
 		ResultSet resultado = null;
 		int totalDeRegistro = 0;
 
-		String query = " select COUNT(v.*) from vacina.vacinas v " + " inner join paises p on v.id = p.id "
-				+ " inner join pessoa pe on v.id_pessoa = pe.id_pessoa  ";
+		String query = " select COUNT(v.id_vacina) from vacina.vacinas v " + " inner join paises p on v.id = p.id"
+				+ " inner join pessoa pe on v.id_pessoa = pe.id  ";
 
 		query = incluirFiltros(seletor, query);
-
-		if (seletor.temPaginacao()) {
-			query += " limit " + seletor.getLimite() + " offset " + seletor.getOffset();
-		}
 
 		try {
 			resultado = stmt.executeQuery(query);
