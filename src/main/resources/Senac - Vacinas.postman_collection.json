@@ -1,0 +1,509 @@
+{
+	"info": {
+		"_postman_id": "203b1494-56a5-446f-a95e-b585f6573694",
+		"name": "Senac - Vacinas",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "31206491"
+	},
+	"item": [
+		{
+			"name": "[Vacina] Inserir",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nome\": \"CuraCornoVac\",\r\n    \"paisOrigem\":  {\r\n        \"idPais\": 1\r\n    },\r\n    \"estagio\": 1,\r\n    \"dataInicioPesquisa\": \"2022-10-10\",\r\n    \"pesquisador\": {\r\n        \"id\": 3\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/vacina-o_senac.2024/rest/vacina/salvar",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"vacina-o_senac.2024",
+						"rest",
+						"vacina",
+						"salvar"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[Vacina] Atualizar",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 7,\r\n    \"nome\": \"DisneyLandia\",\r\n    \"paisOrigem\": {\r\n        \"idPais\": 1\r\n    },\r\n    \"estagio\": 3,\r\n    \"dataInicioPesquisa\": \"2018-10-11\",\r\n    \"pesquisador\": {\r\n        \"id\": 3\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/vacina-o_senac.2024/rest/vacina/alterar",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"vacina-o_senac.2024",
+						"rest",
+						"vacina",
+						"alterar"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[Vacina] Excluir",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 1,\r\n    \"paisOrigem\": \"Portugal\",\r\n    \"estagioPesquisa\": 3,\r\n    \"dataInicioPesquisa\": \"2022-10-10\",\r\n    \"responsavel\": {\r\n        \"id\": 1,\r\n        \"nome\": \"Edson Arantes do Nascimento\",\r\n        \"cpf\": \"00011122210\",\r\n        \"matricula\": 10,\r\n        \"dataNascimento\": \"1940-03-21\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/vacina-o_senac.2024/rest/vacina/excluir/7",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"vacina-o_senac.2024",
+						"rest",
+						"vacina",
+						"excluir",
+						"7"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[Vacina] Listar todas",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/vacina-o_senac.2024/rest/vacina/listarTodos",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"vacina-o_senac.2024",
+						"rest",
+						"vacina",
+						"listarTodos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[Vacina] Consultar por id responsável",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/senac-20241-backend-exemplos/rest/vacina/responsavel/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"senac-20241-backend-exemplos",
+						"rest",
+						"vacina",
+						"responsavel",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[Vacina] Consultar por id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/vacina-o_senac.2024/rest/vacina/7",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"vacina-o_senac.2024",
+						"rest",
+						"vacina",
+						"7"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[Pessoa] Inserir",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"cpf\": \"01022201055\",\r\n    \"dataNascimento\": \"2000-05-11\",\r\n    \"nome\": \"Robertinho\",\r\n    \"sexo\": \"M\",\r\n    \"tipoPessoaCadastrada\": 1,\r\n    \"paisOrigem\": {\r\n        \"idPais\": 2\r\n    }\r\n} ",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/vacina-o_senac.2024/rest/pessoa/inserir",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"vacina-o_senac.2024",
+						"rest",
+						"pessoa",
+						"inserir"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[Pessoa] Atualizar",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"cpf\": \"01012301010\",\r\n    \"dataNascimento\": \"1940-10-23\",\r\n    \"id\": 2,\r\n    \"nome\": \"Edson Arantes do Nascimento (Pelé)\",\r\n    \"sexo\": \"M\",\r\n    \"tipoPessoaCadastrada\": 1,\r\n    \"paisOrigem\": {\r\n        \"idPais\": 1\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/vacina-o_senac.2024/rest/pessoa/alterar",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"vacina-o_senac.2024",
+						"rest",
+						"pessoa",
+						"alterar"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[Pessoa] Excluir",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 1,\r\n    \"paisOrigem\": \"Portugal\",\r\n    \"estagioPesquisa\": 3,\r\n    \"dataInicioPesquisa\": \"2022-10-10\",\r\n    \"responsavel\": {\r\n        \"id\": 1,\r\n        \"nome\": \"Edson Arantes do Nascimento\",\r\n        \"cpf\": \"00011122210\",\r\n        \"matricula\": 10,\r\n        \"dataNascimento\": \"1940-03-21\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/vacina-o_senac.2024/rest/pessoa/excluir/4",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"vacina-o_senac.2024",
+						"rest",
+						"pessoa",
+						"excluir",
+						"4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[Pessoa] Listar todas",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/vacina-o_senac.2024/rest/pessoa/listar",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"vacina-o_senac.2024",
+						"rest",
+						"pessoa",
+						"listar"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[Pessoa] Consultar por id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/vacina-o_senac.2024/rest/pessoa/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"vacina-o_senac.2024",
+						"rest",
+						"pessoa",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[Vacinacao] Inserir",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"idPessoa\" : 3,\r\n    \"vacina\": {\r\n        \"id\": 7\r\n    },\r\n    \"dataAplicacao\": \"2024-03-20\",\r\n    \"avaliacao\": 1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/vacina-o_senac.2024/rest/vacinacao/salvar",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"vacina-o_senac.2024",
+						"rest",
+						"vacinacao",
+						"salvar"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[Vacinacao] Consultar por id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/vacina-o_senac.2024/rest/vacinacao/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"vacina-o_senac.2024",
+						"rest",
+						"vacinacao",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[Vacinacao] Excluir",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/vacina-o_senac.2024/rest/vacinacao/excluir/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"vacina-o_senac.2024",
+						"rest",
+						"vacinacao",
+						"excluir",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[PAIS] inserir",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nomePais\": \"Polónia\",\r\n    \"sigla\": \"PL\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/vacina-o_senac.2024/rest/pais/inserir",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"vacina-o_senac.2024",
+						"rest",
+						"pais",
+						"inserir"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[Vacina] Vacina por filtro",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nomePais\": \"Brasil\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/vacina-o_senac.2024/rest/vacina/filtro",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"vacina-o_senac.2024",
+						"rest",
+						"vacina",
+						"filtro"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[Montadora] Inserir montadora",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nome\": \"Ford\",\r\n    \"paisFundacao\": \"Estados Unidos\",\r\n    \"nomeFundador\": \"Henry Ford\",\r\n    \"dataFundacao\": \"1903-06-16\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/vacina-o_senac.2024/rest/montadora/inserir",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"vacina-o_senac.2024",
+						"rest",
+						"montadora",
+						"inserir"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[Carro] consultar por filtro",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\r\n    \"nomeMarca\": \"Toyota\",\r\n      \"modelo\": \"Corolla\",\r\n      \"anoInicial\": null,\r\n      \"anoFinal\": 2022,\r\n      \"paisMarca\": \"Japão\",\r\n      \"valorInicial\": 30000.00,\r\n      \"valorFinal\": 70000.00\r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/vacina-o_senac.2024/rest/carro/filtro",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"vacina-o_senac.2024",
+						"rest",
+						"carro",
+						"filtro"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -2,6 +2,8 @@ package model.repository;
 
 import java.util.ArrayList;
 
+import model.entity.Montadora;
+import model.entity.PessoaEntity;
 import model.entity.VacinaEntity;
 
 
@@ -25,5 +27,8 @@ public interface BaseRepository <T> {
 	
 	//listar todas entidades do banco de dados.
 	public ArrayList<T> consultarTodos();
+
+
+	
 
 }

@@ -271,6 +271,7 @@ public class VacinaRepository implements BaseRepository<VacinaEntity> {
 			query += " v.dataInicioPesquisa BETWEEN '" + seletor.getDataInicioPesquisa() + "' and '"
 					+ seletor.getDataFinalPesquisa() + "'";
 			primeiro = false;
+			
 		} else if (seletor.getDataInicioPesquisa() != null) {
 			if (primeiro) {
 				query += " and ";
